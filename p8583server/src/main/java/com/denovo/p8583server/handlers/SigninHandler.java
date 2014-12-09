@@ -7,15 +7,9 @@ import com.denovo.p8583.ResponseMessage;
 import com.denovo.p8583server.handlers.handlercommon.Globals;
 import com.denovo.p8583server.handlers.handlercommon.JsonHelper;
 import com.denovo.p8583server.handlers.jsonmodel.Result;
-import com.denovo.p8583server.handlers.jsonmodel.SignInEntry;
 import com.denovo.p8583server.requestMessages.SignInRequestMessage;
 import com.denovo.p8583server.responseMessages.SignInResponseMessage;
-import com.denovo.p8583server.memweb.IMemberWebService;
-import com.denovo.p8583server.memweb.IMemberWebServiceService;
-import net.sf.json.JSONObject;
-import org.apache.commons.codec.binary.Hex;
 
-import java.security.MessageDigest;
 import java.util.UUID;
 
 /**
