@@ -1,8 +1,6 @@
 package com.denovo.p8583server.handlers.handlercommon;
 
 import com.denovo.p8583server.memweb.IMemberWebService;
-import sun.security.x509.Extension;
-
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import java.io.BufferedInputStream;

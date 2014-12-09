@@ -3,16 +3,9 @@ package com.denovo.p8583server.handlers;
 import com.denovo.p8583.MessageHandler;
 import com.denovo.p8583.ResponseMessage;
 import com.denovo.p8583server.handlers.handlercommon.JsonHelper;
-import com.denovo.p8583server.handlers.jsonmodel.PosRegisteredEntry;
 import com.denovo.p8583server.handlers.jsonmodel.Result;
-import com.denovo.p8583server.memweb.IMemberWebService;
-import com.denovo.p8583server.memweb.IMemberWebServiceService;
 import com.denovo.p8583server.requestMessages.PosRegisteredRequestMessage;
 import com.denovo.p8583server.responseMessages.PosRegisteredResponseMessage;
-import net.sf.json.JSONObject;
-import org.apache.commons.codec.binary.Hex;
-
-import java.security.MessageDigest;
 
 
 /**
