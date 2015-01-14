@@ -16,22 +16,18 @@ import java.nio.charset.Charset;
 public class App{
     public static void main(String[] args) {
 
-        IoBuffer buffer = IoBuffer.allocate(1024);
 
-
-        System.out.println("===================================");
-        buffer.putInt(12);
-        buffer.position(0);
-        System.out.println(buffer.position());
-        buffer.capacity(4);
-        byte[] bytes = buffer.array();
-        System.out.println(Hex.encodeHexString(bytes));
+        Integer d = 14;
+        System.out.println(Integer.toHexString(8));
+        System.out.println(Integer.valueOf("10", 16));
+//        IoBuffer buffer = IoBuffer.allocate(1024);
+//
 //        IoAcceptor acceptor = new NioSocketAcceptor();
 //        acceptor.getFilterChain().addLast( "logger", new LoggingFilter() );
 //        acceptor.getFilterChain().addLast( "codec", new ProtocolCodecFilter( new P583CodecFactory()));
 //        acceptor.setHandler(  new TimeServerHandler() );
 //
-//        acceptor.getSessionConfig().setReadBufferSize(2048);
+//        acceptor.getSessionConfig().setReadBufferSize(4096);
 //        acceptor.getSessionConfig().setIdleTime( IdleStatus.BOTH_IDLE, 1 );
 //        try {
 //            acceptor.bind( new InetSocketAddress(3130) );
