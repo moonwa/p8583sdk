@@ -1,19 +1,16 @@
-apply plugin: 'java'
+apply plugin: 'java' 
+apply plugin: 'idea'
 
 sourceCompatibility = 1.5
 version = '1.0'
-
+ 
 repositories {
+    
     maven { url "https://repo.spring.io/libs-release" }
     mavenLocal()
     mavenCentral()
 }
-dependencies {
+
+dependencies { 
     testCompile group: 'junit', name: 'junit', version: '4.11'
-}
-
-
-
-task compileTask << {
-    System.out.println "compiling…"
 }

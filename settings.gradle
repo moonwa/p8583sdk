@@ -1,2 +1,3 @@
 rootProject.name = 'p8583sdk'
 
+include 'p8583server', 'p8583'
