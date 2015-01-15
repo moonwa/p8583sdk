@@ -5,10 +5,10 @@ import java.util.Arrays;
 /**
  * Created by moonwa on 15-1-14.
  */
-public class BinaryFixLengthP8583Item extends P8583Item {
+public class BinaryFixLengthP8583Field extends P8583Field {
     private int length;
 
-    public BinaryFixLengthP8583Item(int length) {
+    public BinaryFixLengthP8583Field(int length) {
         this.length = length;
     }
 

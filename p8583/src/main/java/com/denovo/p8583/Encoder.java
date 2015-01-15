@@ -18,7 +18,7 @@ public class Encoder {
         for(int i = 0; i < bytes.length; i++){
             byte[] bcdBytes = fromBcd(bytes[i]);
             results[i*2] = bcdBytes[0];
-            results[i*2+1] = bcdBytes[0];
+            results[i*2+1] = bcdBytes[1];
         }
         return results;
     }

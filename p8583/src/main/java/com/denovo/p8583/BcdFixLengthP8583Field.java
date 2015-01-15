@@ -2,10 +2,10 @@ package com.denovo.p8583;
 
 import java.util.Arrays;
 
-public class BcdFixLengthP8583Item extends P8583Item {
+public class BcdFixLengthP8583Field extends P8583Field {
     private int length;
 
-    public BcdFixLengthP8583Item (int length) {
+    public BcdFixLengthP8583Field(int length) {
         this.length = length;
     }
 
@@ -20,7 +20,7 @@ public class BcdFixLengthP8583Item extends P8583Item {
 
         actual_len = actual_len / 2;
 
-        byte[] data = Arrays.copyOfRange(bytes, ptr, ptr + actual_len / 2);
+        byte[] data = Arrays.copyOfRange(bytes, ptr, ptr + actual_len );
         data = Encoder.fromBcds(data);
 
         if(len % 2 == 1){
@@ -28,6 +28,6 @@ public class BcdFixLengthP8583Item extends P8583Item {
         }
         this.setData(data);
 
-        return actual_len / 2;
+        return actual_len  ;
     }
 }

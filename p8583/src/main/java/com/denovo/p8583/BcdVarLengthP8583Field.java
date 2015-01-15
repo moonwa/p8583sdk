@@ -5,12 +5,12 @@ import java.util.Arrays;
 /**
  * Created by moonwa on 15-1-14.
  */
-public class BcdVarLengthP8583Item extends P8583Item {
+public class BcdVarLengthP8583Field extends P8583Field {
     private int length;
     private int varLength;
     private boolean isCompress;
 
-    public BcdVarLengthP8583Item (int length, int varLength, boolean isCompress) {
+    public BcdVarLengthP8583Field(int length, int varLength, boolean isCompress) {
         this.length = length;
         this.varLength = varLength;
         this.isCompress = isCompress;

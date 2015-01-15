@@ -1,6 +1,7 @@
 package com.denovo.p8583server;
 
 import com.denovo.p8583.P8583Pack;
+import com.denovo.p8583.P8583PackFactory;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
