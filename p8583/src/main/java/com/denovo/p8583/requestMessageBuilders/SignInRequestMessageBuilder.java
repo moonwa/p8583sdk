@@ -24,7 +24,7 @@ public class SignInRequestMessageBuilder extends DefaultRequestMessagePackBuilde
 
         request.setUserName(getUserName(p8583Pack));
         request.setPassword(getPassword(p8583Pack));
-        request.setPassword(getSerialNo(p8583Pack));
+        request.setSerialNo(getSerialNo(p8583Pack));
         return request;
     }
 
