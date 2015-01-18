@@ -34,6 +34,10 @@ public class App{
         acceptor.getSessionConfig().setIdleTime( IdleStatus.BOTH_IDLE, 1 );
         try {
             acceptor.bind( new InetSocketAddress(3130) );
+            System.out.println("started.");
+            System.in.read();
+            System.out.println("stoped.");
+            acceptor.dispose();
         } catch (IOException e) {
             e.printStackTrace();
         }

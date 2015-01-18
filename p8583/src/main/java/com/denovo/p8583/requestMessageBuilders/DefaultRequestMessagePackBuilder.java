@@ -1,11 +1,16 @@
 package com.denovo.p8583.requestMessageBuilders;
 
+import com.denovo.p8583.DefaultRequestMessage;
 import com.denovo.p8583.P8583Fields;
+import com.denovo.p8583.P8583Pack;
 import com.denovo.p8583.RequestMessageBuilder;
 import com.denovo.p8583.fields.*;
 
 public abstract class DefaultRequestMessagePackBuilder extends RequestMessageBuilder {
 
+    protected String getSerialNo(P8583Pack p8583Pack) throws Exception {
+        return p8583Pack.getString(11);
+    }
     @Override
     public void Init(P8583Fields fields) {
         fields.addP8583ItemAt(2, new BcdVarLengthP8583Field(19, 2, false));
@@ -42,5 +47,9 @@ public abstract class DefaultRequestMessagePackBuilder extends RequestMessageBui
         fields.addP8583ItemAt(62, new AsciiVarLengthP8583Field(60, 3, true));
         fields.addP8583ItemAt(63, new AsciiVarLengthP8583Field(63, 3, true));
         fields.addP8583ItemAt(64, new BinaryFixLengthP8583Field(16));
+    }
+    public void update(P8583Pack pack, DefaultRequestMessage message) throws Exception {
+        message.setTerminalNo(pack.getString(41));
+        message.setClientNo(pack.getString(42));
     }
 }

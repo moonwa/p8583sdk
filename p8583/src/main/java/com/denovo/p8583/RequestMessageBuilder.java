@@ -18,7 +18,7 @@ public abstract class RequestMessageBuilder {
 
         String bitBitmap = "";
         for (int i = 13; i < 21; i++) {
-            bitBitmap += StringUtils.leftPad(Integer.toBinaryString(bytes[i]), 8, '0');
+            bitBitmap += StringUtils.leftPad(Integer.toBinaryString(bytes[i]), Integer.SIZE, '0').substring(Integer.SIZE - Byte.SIZE);
         }
         ArrayList<P8583Field> p8583Fields = new ArrayList<P8583Field>();
         for (int i = 1; i <= 64; i++) {
@@ -33,6 +33,7 @@ public abstract class RequestMessageBuilder {
             char flag = flags[i];
             if (flag == '1') {
                 ptr += pack.writeData(i + 1, bytes, ptr);
+                int g = i;
             }
         }
 

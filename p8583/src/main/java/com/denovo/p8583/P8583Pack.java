@@ -27,4 +27,8 @@ public class P8583Pack {
     public byte[] getByteArray(int index) {
         return this.p8583Fields.get(index - 1).getByteArray();
     }
+
+    public   boolean getHasValue(int index) {
+        return this.p8583Fields.get(index - 1).getHasValue();
+    }
 }

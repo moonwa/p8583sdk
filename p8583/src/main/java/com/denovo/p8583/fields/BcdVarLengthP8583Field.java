@@ -31,7 +31,7 @@ public class BcdVarLengthP8583Field extends P8583Field {
         }
         if (this.varLength == 3) {
             len = Integer.valueOf(((Byte) bytes[ptr]).toString(), 16);
-            len = len * 100 + Integer.valueOf(((Byte) bytes[ptr + 1]).toString(), 16);
+            len =   len * 100 +  Integer.valueOf(((Byte) bytes[ptr + 1]).toString(), 16);
             skip = 2;
         }
         if (this.isCompress) {

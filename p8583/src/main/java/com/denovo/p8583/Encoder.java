@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by moonwa on 15-1-14.
  */
-class Encoder {
+public class Encoder {
     public static byte[] fromBcd(byte value) {
         return StringUtils.leftPad(Integer.toHexString(value), 2, '0').getBytes();
     }

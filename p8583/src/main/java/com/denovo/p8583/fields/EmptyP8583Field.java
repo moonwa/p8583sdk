@@ -8,7 +8,17 @@ import com.denovo.p8583.P8583Field;
 public class EmptyP8583Field extends P8583Field {
     @Override
     public int writeData(byte[] bytes, int ptr) {
-        return ptr;
+        return 0;
+    }
+
+    @Override
+    public String getString() throws Exception {
+        return "";
+    }
+
+    @Override
+    public byte[] getByteArray() {
+        return new byte[0];
     }
 
     @Override

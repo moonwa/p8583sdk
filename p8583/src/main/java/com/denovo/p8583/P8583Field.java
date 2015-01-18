@@ -8,10 +8,11 @@ import java.util.ArrayList;
  */
 public abstract class P8583Field {
     private byte[] data;
-
+    private boolean hasValue = false;
     public abstract int writeData(byte[] bytes, int ptr);
 
     public void setData(byte[] data) {
+        hasValue=true;
         this.data = data;
     }
 
@@ -26,4 +27,8 @@ public abstract class P8583Field {
     public byte[] getByteArray() {
         return data;
     }
+
+    public   boolean getHasValue(){
+        return hasValue;
+    };
 }

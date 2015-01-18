@@ -5,12 +5,12 @@ import com.denovo.p8583.P8583Field;
 
 import java.util.Arrays;
 
-public class BinnaryVarLengthP8583Field extends P8583Field {
+public class BinaryVarLengthP8583Field extends P8583Field {
     private int length;
     private int varLength;
     private boolean isCompress;
 
-    public BinnaryVarLengthP8583Field(int length, int varLength, boolean isCompress) {
+    public BinaryVarLengthP8583Field(int length, int varLength, boolean isCompress) {
         this.length = length;
         this.varLength = varLength;
         this.isCompress = isCompress;
