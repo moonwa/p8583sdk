@@ -12,8 +12,7 @@ import java.util.Arrays;
 public abstract class RequestMessageBuilder {
     public abstract void Init(P8583Fields fields);
 
-
-    protected RequestMessage pack(byte[] bytes, String messageType) throws Exception {
+    public P8583Pack pack(byte[] bytes, String messageType) throws Exception {
         byte[] tpud = Arrays.copyOfRange(bytes, 0, 5);
 
         String bitBitmap = "";
@@ -37,7 +36,9 @@ public abstract class RequestMessageBuilder {
             }
         }
 
-        P8583Pack p8583Pack = new P8583Pack(messageType, fields.getFields());
+        return new P8583Pack(messageType, fields.getFields());
+    }
+    protected RequestMessage build(P8583Pack p8583Pack) throws Exception {
         return createRequestMessage(p8583Pack);
     }
 

@@ -31,4 +31,16 @@ public class P8583Pack {
     public   boolean getHasValue(int index) {
         return this.p8583Fields.get(index - 1).getHasValue();
     }
+
+    public Integer[] getFieldIndexs( ) {
+        ArrayList<Integer> items = new ArrayList<Integer>();
+        for(int i = 0; i < this.p8583Fields.size(); i++){
+            if(  this.p8583Fields.get(i).getHasValue()){
+                items.add(i+1);
+            }
+        }
+        Integer[] result = new Integer[items.size()];
+        items.toArray(result);
+        return result;
+    }
 }

@@ -1,10 +1,7 @@
 package com.denovo.p8583;
 
-import com.denovo.p8583.fields.EmptyP8583Field;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -16,11 +13,17 @@ public class RequestMessageBuilders {
     public void register(String messageType, RequestMessageBuilder packBuilder) {
         this.messageType2Builders.put(messageType, packBuilder);
     }
-    public RequestMessage build(byte[] bytes) throws Exception {
+    public P8583Pack pack(byte[] bytes) throws Exception {
         String messageType = StringUtils.leftPad(Integer.toHexString(bytes[11]), 2, '0') + StringUtils.leftPad(Integer.toHexString(bytes[12]), 2, '0');
 
         RequestMessageBuilder builder = getBuilder(messageType);
         return builder.pack(bytes, messageType);
+    }
+    public RequestMessage build(byte[] bytes) throws Exception {
+        String messageType = StringUtils.leftPad(Integer.toHexString(bytes[11]), 2, '0') + StringUtils.leftPad(Integer.toHexString(bytes[12]), 2, '0');
+
+        RequestMessageBuilder builder = getBuilder(messageType);
+        return builder.build(builder.pack(bytes, messageType));
     }
     public RequestMessageBuilder getBuilder(String messageType) {
         return this.messageType2Builders.get(messageType);

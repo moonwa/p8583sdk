@@ -1,5 +1,6 @@
 package com.denovo.p8583;
 
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public class Encoder {
     public static byte[] fromBcd(byte value) {
-        return StringUtils.leftPad(Integer.toHexString(value), 2, '0').getBytes();
+        return StringUtils.leftPad(Integer.toHexString(value), Integer.SIZE / 4, '0').substring((Integer.SIZE - Byte.SIZE)  / 4, Integer.SIZE / 4).getBytes();
     }
 
     public static byte[] fromBcds(byte[] bytes) {
@@ -22,5 +23,8 @@ public class Encoder {
             results[i * 2 + 1] = bcdBytes[1];
         }
         return results;
+    }
+    public static int getLength(byte[] bytes){
+        return Integer.parseInt(new String(Hex.encodeHex(bytes)));
     }
 }

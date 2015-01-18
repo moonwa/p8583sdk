@@ -22,14 +22,12 @@ public class BinaryVarLengthP8583Field extends P8583Field {
 
         int skip = 0;
         if (this.varLength == 2) {
-            Byte b = bytes[ptr];
-            len = Integer.valueOf(b.toString(), 16);
             skip = 1;
+            len = Encoder.getLength(Arrays.copyOfRange(bytes, ptr  , ptr + skip));
         }
         if (this.varLength == 3) {
-            len = Integer.valueOf(((Byte) bytes[ptr]).toString(), 16);
-            len = len * 100 + Integer.valueOf(((Byte) bytes[ptr + 1]).toString(), 16);
             skip = 2;
+            len = Encoder.getLength(Arrays.copyOfRange(bytes, ptr  , ptr + skip));
         }
         if (this.isCompress) {
             len = len * 2;
@@ -43,7 +41,7 @@ public class BinaryVarLengthP8583Field extends P8583Field {
         byte[] data = Arrays.copyOfRange(bytes, ptr + skip, ptr + skip + actual_len / 2);
         data = Encoder.fromBcds(data);
         if (len % 2 == 1) {
-            data = Arrays.copyOfRange(data, 1, data.length);
+            data = Arrays.copyOfRange(data, 0, data.length - 1);
         }
         this.setData(data);
         return skip + actual_len;
