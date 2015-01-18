@@ -1,4 +1,6 @@
-package com.denovo.p8583;
+package com.denovo.p8583.fields;
+
+import com.denovo.p8583.P8583Field;
 
 import java.util.Arrays;
 

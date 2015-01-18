@@ -1,4 +1,7 @@
-package com.denovo.p8583;
+package com.denovo.p8583.fields;
+
+import com.denovo.p8583.Encoder;
+import com.denovo.p8583.P8583Field;
 
 import java.util.Arrays;
 
@@ -21,28 +24,28 @@ public class BcdVarLengthP8583Field extends P8583Field {
         int len = 0;
 
         int skip = 0;
-        if(this.varLength == 2){
+        if (this.varLength == 2) {
             Byte b = bytes[ptr];
             len = Integer.valueOf(b.toString(), 16);
             skip = 1;
         }
-        if(this.varLength == 3){
-            len = Integer.valueOf(((Byte)bytes[ptr]).toString(), 16);
-            len = len*100 + Integer.valueOf(((Byte)bytes[ptr+1]).toString(), 16);
+        if (this.varLength == 3) {
+            len = Integer.valueOf(((Byte) bytes[ptr]).toString(), 16);
+            len = len * 100 + Integer.valueOf(((Byte) bytes[ptr + 1]).toString(), 16);
             skip = 2;
         }
-        if(this.isCompress){
+        if (this.isCompress) {
             len = len * 2;
         }
 
         int actual_len = len;
         // 跳过自动补0
-        if(len % 2 == 1){
+        if (len % 2 == 1) {
             actual_len = actual_len + 1;
         }
         byte[] data = Arrays.copyOfRange(bytes, ptr + skip, ptr + skip + actual_len / 2);
         data = Encoder.fromBcds(data);
-        if(len % 2 == 1){
+        if (len % 2 == 1) {
             data = Arrays.copyOfRange(data, 1, data.length);
         }
         this.setData(data);

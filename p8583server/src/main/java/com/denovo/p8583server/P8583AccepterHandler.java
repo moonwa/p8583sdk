@@ -1,15 +1,18 @@
 package com.denovo.p8583server;
 
-import com.denovo.p8583.P8583Pack;
-import com.denovo.p8583.P8583PackFactory;
+import com.denovo.p8583.*;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 
-import java.util.Date;
-
-public class TimeServerHandler extends IoHandlerAdapter
+public class P8583AccepterHandler extends IoHandlerAdapter
 {
+    private HandlerBuilders handlerBuilders;
+
+    public P8583AccepterHandler(HandlerBuilders handlerBuilders) {
+        this.handlerBuilders = handlerBuilders;
+    }
+
     @Override
     public void exceptionCaught( IoSession session, Throwable cause ) throws Exception
     {
@@ -18,16 +21,11 @@ public class TimeServerHandler extends IoHandlerAdapter
     @Override
     public void messageReceived( IoSession session, Object message ) throws Exception
     {
-        String str = message.toString();
-        System.out.println("my message...");
-        System.out.println(str);
-        if( str.trim().equalsIgnoreCase("quit") ) {
-            session.close();
-            return;
-        }
-        Date date = new Date();
-        session.write( date.toString() );
-        System.out.println("Message written...");
+        RequestMessage requestMessage= (RequestMessage) message;
+        HandlerBuilder handlerBuilder = handlerBuilders.getHandler(requestMessage.getMessageType());
+        MessageHandler handler = handlerBuilder.build(requestMessage);
+        ResponseMessage responseMessage = handler.handle();
+        session.write(responseMessage);
     }
     @Override
     public void sessionIdle( IoSession session, IdleStatus status ) throws Exception
