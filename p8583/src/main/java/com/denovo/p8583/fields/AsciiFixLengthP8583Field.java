@@ -19,4 +19,9 @@ public class AsciiFixLengthP8583Field extends P8583Field {
         this.setData(Arrays.copyOfRange(bytes, ptr, ptr + this.length));
         return this.length;
     }
+
+    @Override
+    protected byte[] buildData(byte[] data) {
+        return data;
+    }
 }

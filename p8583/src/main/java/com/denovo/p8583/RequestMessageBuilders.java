@@ -4,9 +4,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 
-/**
- * Created by moonwa on 15-1-15.
- */
 public class RequestMessageBuilders {
     HashMap<String, RequestMessageBuilder> messageType2Builders = new HashMap<String, RequestMessageBuilder>();
 

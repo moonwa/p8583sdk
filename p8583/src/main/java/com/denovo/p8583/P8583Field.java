@@ -10,15 +10,14 @@ public abstract class P8583Field {
     private byte[] data;
     private boolean hasValue = false;
     public abstract int writeData(byte[] bytes, int ptr);
+    protected abstract byte[] buildData(byte[] data);
+
 
     public void setData(byte[] data) {
         hasValue=true;
         this.data = data;
     }
 
-    public boolean getIsIgnore() {
-        return false;
-    }
 
     public String getString() throws Exception {
         return new String(this.data, "utf8");
@@ -28,7 +27,15 @@ public abstract class P8583Field {
         return data;
     }
 
-    public   boolean getHasValue(){
+    public  boolean getHasValue(){
         return hasValue;
     };
+
+    public void setString(String text) throws Exception {
+        this.setData(text.getBytes("utf8"));
+    }
+
+    public byte[] buildData(){
+        return buildData(this.data);
+    }
 }

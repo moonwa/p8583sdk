@@ -36,4 +36,9 @@ public class BinaryFixLengthP8583Field extends P8583Field {
 
         return actual_len / 2;
     }
+
+    @Override
+    protected byte[] buildData(byte[] data) {
+        return Encoder.toBcd(data);
+    }
 }

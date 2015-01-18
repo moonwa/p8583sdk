@@ -1,25 +1,36 @@
 package com.denovo.p8583;
 
 public class DefaultRequestMessage extends RequestMessage{
-    private String terminalNo;
-    private String clientNo;
-    public DefaultRequestMessage(String messageType, byte[] mac) {
-        super(messageType, mac);
+    private String terminalId;
+    private String clientId;
+    public DefaultRequestMessage(String messageType, byte[] tpud, byte[] mac) {
+        super(messageType, tpud, mac);
     }
 
-    public String getTerminalNo() {
-        return terminalNo;
+    /*
+        get terminal name
+     */
+    public String getTerminalId() {
+        return terminalId;
     }
 
-    public void setTerminalNo(String terminalNo) {
-        this.terminalNo = terminalNo;
+    /*
+        set terminal name
+     */
+    public void setTerminalId(String terminalId) {
+        this.terminalId = terminalId;
     }
 
-    public String getClientNo() {
-        return clientNo;
+    /*
+        get shop name
+     */
+    public String getClientId() {
+        return clientId;
     }
-
-    public void setClientNo(String clientNo) {
-        this.clientNo = clientNo;
+    /*
+        set shop name
+     */
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 }

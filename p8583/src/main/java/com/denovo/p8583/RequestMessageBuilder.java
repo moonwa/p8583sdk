@@ -25,18 +25,16 @@ public abstract class RequestMessageBuilder {
         }
         P8583Fields fields = new P8583Fields(p8583Fields);
         this.Init(fields);
-        P8583Pack pack = new P8583Pack(messageType, fields.getFields());
+        P8583Pack pack = new P8583Pack(tpud, messageType, fields.getFields());
         int ptr = 21;
         char[] flags = bitBitmap.toCharArray();
         for (int i = 0; i < flags.length; i++) {
             char flag = flags[i];
             if (flag == '1') {
                 ptr += pack.writeData(i + 1, bytes, ptr);
-                int g = i;
             }
         }
-
-        return new P8583Pack(messageType, fields.getFields());
+        return pack;
     }
     protected RequestMessage build(P8583Pack p8583Pack) throws Exception {
         return createRequestMessage(p8583Pack);

@@ -19,12 +19,13 @@ public class SignInRequestMessageBuilder extends DefaultRequestMessagePackBuilde
 
     @Override
     protected RequestMessage createRequestMessage(P8583Pack p8583Pack) throws Exception {
-        SignInRequestMessage request = new SignInRequestMessage(p8583Pack.getMessageType(), getMac(p8583Pack));
+        SignInRequestMessage request = new SignInRequestMessage(p8583Pack.getMessageType(), p8583Pack.getTpud(), getMac(p8583Pack));
         super.update(p8583Pack, request);
 
         request.setUserName(getUserName(p8583Pack));
         request.setPassword(getPassword(p8583Pack));
         request.setSerialNo(getSerialNo(p8583Pack));
+        request.setBatchNo(getBatchNo(p8583Pack));
         return request;
     }
 

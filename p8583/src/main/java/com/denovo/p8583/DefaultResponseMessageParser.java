@@ -1,21 +1,10 @@
-package com.denovo.p8583.requestMessageBuilders;
+package com.denovo.p8583;
 
-import com.denovo.p8583.DefaultRequestMessage;
-import com.denovo.p8583.P8583Fields;
-import com.denovo.p8583.P8583Pack;
-import com.denovo.p8583.RequestMessageBuilder;
 import com.denovo.p8583.fields.*;
+import com.denovo.p8583.responseMessages.DefaultResponseMessage;
+import org.apache.commons.lang3.StringUtils;
 
-public abstract class DefaultRequestMessagePackBuilder extends RequestMessageBuilder {
-
-    protected String getSerialNo(P8583Pack p8583Pack) throws Exception {
-        return p8583Pack.getString(11);
-    }
-
-    protected String getBatchNo(P8583Pack p8583Pack) throws Exception {
-        return p8583Pack.getString(60);
-    }
-
+public class DefaultResponseMessageParser extends ResponseMessageParser{
     @Override
     public void Init(P8583Fields fields) {
         fields.addP8583ItemAt(2, new BcdVarLengthP8583Field(19, 2, false));
@@ -53,8 +42,12 @@ public abstract class DefaultRequestMessagePackBuilder extends RequestMessageBui
         fields.addP8583ItemAt(63, new AsciiVarLengthP8583Field(63, 3, true));
         fields.addP8583ItemAt(64, new BinaryFixLengthP8583Field(16));
     }
-    public void update(P8583Pack pack, DefaultRequestMessage message) throws Exception {
-        message.setTerminalId(pack.getString(41));
-        message.setClientId(pack.getString(42));
+    @Override
+    public void update(ResponseMessage message, P8583Pack pack) throws Exception {
+        DefaultResponseMessage defaultResponseMessage = (DefaultResponseMessage) message;
+        Integer result = defaultResponseMessage.getResult();
+        pack.setString(39, StringUtils.leftPad(Integer.toHexString(result), 2, '0'));
+        pack.setString(42, defaultResponseMessage.getClientId());
+        pack.setString(41, defaultResponseMessage.getTerminalId());
     }
 }

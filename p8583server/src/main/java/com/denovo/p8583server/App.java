@@ -1,8 +1,9 @@
 package com.denovo.p8583server;
 
-import com.denovo.p8583.requestMessageBuilders.DefaultRequestMessagePackBuilder;
+import com.denovo.p8583.ResponseMessageEncoders;
 import com.denovo.p8583.HandlerBuilders;
 import com.denovo.p8583.RequestMessageBuilders;
+import com.denovo.p8583.SignInResponseMessageParser;
 import com.denovo.p8583.handlerbuilders.SigninHandlerBuilder;
 import com.denovo.p8583.requestMessageBuilders.SignInRequestMessageBuilder;
 import org.apache.mina.core.service.IoAcceptor;
@@ -19,10 +20,13 @@ public class App{
         IoAcceptor acceptor = new NioSocketAcceptor();
         acceptor.getFilterChain().addLast( "logger", new LoggingFilter() );
 
-        // package builders
-        RequestMessageBuilders packBuilders = new RequestMessageBuilders();
-        packBuilders.register("0800", new SignInRequestMessageBuilder());
-        acceptor.getFilterChain().addLast( "codec", new ProtocolCodecFilter( new P8583CodecFactory(packBuilders)));
+        // request message builders
+        RequestMessageBuilders requestMessageBuilders = new RequestMessageBuilders();
+        requestMessageBuilders.register("0800", new SignInRequestMessageBuilder());
+
+        ResponseMessageEncoders responseMessageEncoders = new ResponseMessageEncoders();
+        responseMessageEncoders.register("0810", new SignInResponseMessageParser());
+        acceptor.getFilterChain().addLast( "codec", new ProtocolCodecFilter( new P8583CodecFactory(requestMessageBuilders, responseMessageEncoders)));
 
         // handler builders
         HandlerBuilders handlerBuilders = new HandlerBuilders();

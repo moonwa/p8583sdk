@@ -3,6 +3,7 @@ package com.denovo.p8583.fields;
 import com.denovo.p8583.Encoder;
 import com.denovo.p8583.P8583Field;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class BinaryVarLengthP8583Field extends P8583Field {
@@ -45,5 +46,23 @@ public class BinaryVarLengthP8583Field extends P8583Field {
         }
         this.setData(data);
         return skip + actual_len;
+    }
+
+    @Override
+    protected byte[] buildData(byte[] data) {
+        ArrayList<Byte> bytes = new ArrayList<Byte>();
+        int len = data.length;
+        if (this.isCompress) {
+            len = len / 2;
+        }
+        if (this.varLength == 2) {
+            bytes.add(Encoder.toLength((byte) len));
+        }
+        if (this.varLength == 3) {
+            bytes.add(Encoder.toLength((byte) (len / 100)));
+            bytes.add(Encoder.toLength((byte) (len % 100)));
+        }
+        bytes.addAll(Encoder.toArray(Encoder.toBcd(data)));
+        return Encoder.toArray(bytes);
     }
 }

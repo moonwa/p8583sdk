@@ -33,4 +33,9 @@ public class BcdFixLengthP8583Field extends P8583Field {
 
         return actual_len;
     }
+
+    @Override
+    protected byte[] buildData(byte[] data) {
+        return Encoder.toBcd(data);
+    }
 }

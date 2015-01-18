@@ -2,10 +2,12 @@ package com.denovo.p8583;
 
 public class RequestMessage{
     private String messageType;
+    private byte[] tpud;
     private byte[] mac;
 
-    public RequestMessage(String messageType, byte[] mac) {
+    public RequestMessage(String messageType, byte[] tpud, byte[] mac) {
         this.messageType = messageType;
+        this.tpud = tpud;
         this.mac = mac;
     }
 
@@ -15,5 +17,9 @@ public class RequestMessage{
 
     public byte[] getMac() {
         return mac;
+    }
+
+    public byte[] getTpud() {
+        return tpud;
     }
 }

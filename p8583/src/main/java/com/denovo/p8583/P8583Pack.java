@@ -2,11 +2,12 @@ package com.denovo.p8583;
 import java.util.ArrayList;
 
 public class P8583Pack {
-    private byte[] _tpud;
+    private byte[] tpud;
     private String messageType;
     private ArrayList<P8583Field> p8583Fields;
 
-    public P8583Pack(String messageType, ArrayList<P8583Field> p8583Fields) {
+    public P8583Pack(byte[] tpud, String messageType, ArrayList<P8583Field> p8583Fields) {
+        this.tpud = tpud;
         this.messageType = messageType;
         this.p8583Fields = p8583Fields;
     }
@@ -42,5 +43,17 @@ public class P8583Pack {
         Integer[] result = new Integer[items.size()];
         items.toArray(result);
         return result;
+    }
+
+    public void setString(int index, String text) throws Exception {
+        this.p8583Fields.get(index - 1).setString(  text);
+    }
+
+    public byte[] buildData(int index) {
+        return this.p8583Fields.get(index - 1).buildData();
+    }
+
+    public byte[] getTpud() {
+        return tpud;
     }
 }

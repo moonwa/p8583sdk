@@ -12,6 +12,11 @@ public class EmptyP8583Field extends P8583Field {
     }
 
     @Override
+    protected byte[] buildData(byte[] data) {
+        return new byte[0];
+    }
+
+    @Override
     public String getString() throws Exception {
         return "";
     }
@@ -19,10 +24,5 @@ public class EmptyP8583Field extends P8583Field {
     @Override
     public byte[] getByteArray() {
         return new byte[0];
-    }
-
-    @Override
-    public boolean getIsIgnore() {
-        return true;
     }
 }

@@ -1,6 +1,7 @@
 package com.denovo.p8583server;
 
 import com.denovo.p8583.RequestMessageBuilders;
+import com.denovo.p8583.ResponseMessageEncoders;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFactory;
 import org.apache.mina.filter.codec.ProtocolDecoder;
@@ -11,14 +12,11 @@ import org.apache.mina.filter.codec.ProtocolEncoder;
  */
 public class P8583CodecFactory implements ProtocolCodecFactory {
 
-    private RequestMessageBuilders packFactory;
     private P583CodeEncoder encoder;
     private P583CodeDecoder decoder;
-    public P8583CodecFactory(RequestMessageBuilders packFactory){
-
-        this.packFactory = packFactory;
-        encoder =new P583CodeEncoder(packFactory);
-        decoder =new P583CodeDecoder(packFactory);
+    public P8583CodecFactory(RequestMessageBuilders requestMessageBuilders, ResponseMessageEncoders responseMessageEncoders){
+        encoder = new P583CodeEncoder(responseMessageEncoders);
+        decoder = new P583CodeDecoder(requestMessageBuilders);
     }
     public ProtocolEncoder getEncoder(IoSession session) throws Exception {
         return encoder;
