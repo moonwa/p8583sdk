@@ -30,9 +30,9 @@ public class AsciiVarLengthP8583Field extends P8583Field {
             skip = 2;
             len = Encoder.getLength(Arrays.copyOfRange(bytes, ptr  , ptr + skip));
         }
-        if (this.isCompress) {
-            len = len * 2;
-        }
+//        if (this.isCompress) {
+//            len = len * 2;
+//        }
 
         byte[] data = Arrays.copyOfRange(bytes, ptr + skip, ptr + skip + len);
         this.setData(data);

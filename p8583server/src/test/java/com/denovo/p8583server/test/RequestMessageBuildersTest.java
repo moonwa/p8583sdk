@@ -1,9 +1,8 @@
 package com.denovo.p8583server.test;
 
-import com.denovo.p8583.P8583Pack;
 import com.denovo.p8583.RequestMessageBuilders;
-import com.denovo.p8583.requestMessageBuilders.SignInRequestMessageBuilder;
-import com.denovo.p8583.requestMessages.SignInRequestMessage;
+import com.denovo.p8583server.requestMessageBuilders.SignInRequestMessageBuilder;
+import com.denovo.p8583server.requestMessages.SignInRequestMessage;
 import org.apache.commons.codec.binary.Hex;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -16,7 +15,7 @@ public class RequestMessageBuildersTest {
         RequestMessageBuilders builders = new RequestMessageBuilders();
         builders.register("0800" , new SignInRequestMessageBuilder());
 
-        byte[] bytes = Hex.decodeHex("600003000060220000000008000020000000c20012000452383038373938383830383630353737383038373938383800320000000000000000000000000000000000000000000000000000000000000000001100002199001000432020203031202020202020202020202020202020202020333333332020202020202020202020202020".toCharArray());
+        byte[] bytes = Hex.decodeHex("600003000060220000000008000020000000c2001200045238303837393838383038363035373738303837393838380032000000000000000000000000000000000000000000000000000000000000000000110000219900100043202020303120202020202020202020202020202020202033333333202020202020202020202020202020202020".toCharArray());
         SignInRequestMessage signinRequestMessage = (SignInRequestMessage) builders.build(bytes);
         assertEquals("000452", signinRequestMessage.getSerialNo());
         assertEquals("086057780879888", signinRequestMessage.getClientId());

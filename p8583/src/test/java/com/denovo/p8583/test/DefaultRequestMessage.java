@@ -1,6 +1,8 @@
-package com.denovo.p8583;
+package com.denovo.p8583.test;
 
-public class DefaultRequestMessage extends RequestMessage{
+import com.denovo.p8583.RequestMessage;
+
+class DefaultRequestMessage extends RequestMessage {
     private String terminalId;
     private String clientId;
     public DefaultRequestMessage(String messageType, byte[] tpud, byte[] mac) {

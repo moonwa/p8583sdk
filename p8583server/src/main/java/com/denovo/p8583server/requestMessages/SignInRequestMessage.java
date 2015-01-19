@@ -1,8 +1,4 @@
-package com.denovo.p8583.requestMessages;
-
-import com.denovo.p8583.DefaultRequestMessage;
-import com.denovo.p8583.P8583Pack;
-import com.denovo.p8583.RequestMessage;
+package com.denovo.p8583server.requestMessages;
 
 /**
  * Created by moonwa on 15-1-18.

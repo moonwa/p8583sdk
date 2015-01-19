@@ -1,6 +1,6 @@
-package com.denovo.p8583.requestMessageBuilders;
+package com.denovo.p8583server.requestMessageBuilders;
 
-import com.denovo.p8583.DefaultRequestMessage;
+import com.denovo.p8583server.requestMessages.DefaultRequestMessage;
 import com.denovo.p8583.P8583Fields;
 import com.denovo.p8583.P8583Pack;
 import com.denovo.p8583.RequestMessageBuilder;
@@ -49,8 +49,8 @@ public abstract class DefaultRequestMessagePackBuilder extends RequestMessageBui
         fields.addP8583ItemAt(59, new AsciiVarLengthP8583Field(20, 3, false));
         fields.addP8583ItemAt(60, new BcdVarLengthP8583Field(22, 3, false));
         fields.addP8583ItemAt(61, new BcdVarLengthP8583Field(29, 3, false));
-        fields.addP8583ItemAt(62, new AsciiVarLengthP8583Field(60, 3, true));
-        fields.addP8583ItemAt(63, new AsciiVarLengthP8583Field(63, 3, true));
+        fields.addP8583ItemAt(62, new AsciiVarLengthP8583Field(60, 3, false));
+        fields.addP8583ItemAt(63, new AsciiVarLengthP8583Field(63, 3, false));
         fields.addP8583ItemAt(64, new BinaryFixLengthP8583Field(16));
     }
     public void update(P8583Pack pack, DefaultRequestMessage message) throws Exception {

@@ -32,10 +32,13 @@ public class ResponseMessageEncoders {
         String[] bitMaps = new String[8];
 
         for(int i = 0; i < 64; i++){
-            bitMaps[i%8] += (pack.getHasValue(i+1) ? "1" : "0");
+            if(bitMaps[i/8] == null){
+                bitMaps[i/8] = "";
+            }
+            bitMaps[i/8] += (pack.getHasValue(i+1) ? "1" : "0");
         }
         for(String bitBitmap : bitMaps){
-            bytes.add((byte)(int)Integer.valueOf(2));
+            bytes.add((byte)(int)Integer.valueOf(bitBitmap, 2));
         }
         for(int i : pack.getFieldIndexs()){
             bytes.addAll(Encoder.toArray(pack.buildData(i)));

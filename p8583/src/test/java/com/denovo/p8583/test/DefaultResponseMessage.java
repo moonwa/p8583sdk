@@ -1,14 +1,12 @@
-package com.denovo.p8583.responseMessages;
+package com.denovo.p8583.test;
 
-import com.denovo.p8583.DefaultRequestMessage;
 import com.denovo.p8583.RequestMessage;
 import com.denovo.p8583.ResponseMessage;
-import com.denovo.p8583.requestMessages.SignInRequestMessage;
 
 /**
  * Created by moonwa on 15-1-18.
  */
-public class DefaultResponseMessage extends ResponseMessage {
+class DefaultResponseMessage extends ResponseMessage {
     public DefaultResponseMessage(String messageType, byte[] tpud) {
         super(messageType, tpud);
     }

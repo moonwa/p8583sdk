@@ -1,9 +1,4 @@
-package com.denovo.p8583.responseMessages;
-
-import com.denovo.p8583.DefaultRequestMessage;
-import com.denovo.p8583.RequestMessage;
-import com.denovo.p8583.ResponseMessage;
-import com.denovo.p8583.requestMessages.SignInRequestMessage;
+package com.denovo.p8583server.responseMessages;
 
 public class SignInResponseMessage extends DefaultResponseMessage {
     public SignInResponseMessage(String messageType, byte[] tpud) {

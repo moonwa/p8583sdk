@@ -26,7 +26,7 @@ public class P583CodeDecoder extends CumulativeProtocolDecoder {
             int len = in.getUnsignedShort();
             if(in.remaining() >= len){
                 byte[] array = in.array();
-                array = Arrays.copyOfRange(array, 2, len);
+                array = Arrays.copyOfRange(array, 2, len + 2);
                 RequestMessage requestMessage = messageBuilders.build(array);
                 out.write(requestMessage);
             }else{

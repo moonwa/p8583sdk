@@ -27,15 +27,13 @@ public class Encoder {
             byte[] bytes = Arrays.copyOfRange(data, i, i + 2);
             String text = new String(bytes);
 
-            byte d = toBcd(Integer.valueOf(text).byteValue());
+            byte d = Integer.valueOf(text, 16).byteValue();
             results.add(d);
         }
         return toArray(results);
     }
 
-    private static byte toBcd(byte b) {
-        return Integer.valueOf(Integer.toHexString(b)).byteValue();
-    }
+
 
     public static byte[] fromBcds(byte[] bytes) {
         byte[] results = new byte[bytes.length * 2];
@@ -48,12 +46,11 @@ public class Encoder {
         return results;
     }
     public static int getLength(byte[] bytes){
-
         return Integer.parseInt(new String(Hex.encodeHex(bytes)));
     }
 
     public static byte toLength(byte length) {
-        return toBcd(length);
+        return Integer.valueOf(String.format("%d%d", length / 10, length % 10), 16).byteValue();
     }
 
     public static Collection<Byte> toArray(byte[] data) {

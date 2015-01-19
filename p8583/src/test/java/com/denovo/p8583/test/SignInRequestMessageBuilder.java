@@ -1,16 +1,15 @@
-package com.denovo.p8583.requestMessageBuilders;
+package com.denovo.p8583.test;
 
 import com.denovo.p8583.P8583Fields;
 import com.denovo.p8583.P8583Pack;
 import com.denovo.p8583.RequestMessage;
 import com.denovo.p8583.fields.BinaryVarLengthP8583Field;
-import com.denovo.p8583.requestMessages.SignInRequestMessage;
 import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by moonwa on 15-1-18.
  */
-public class SignInRequestMessageBuilder extends DefaultRequestMessagePackBuilder {
+class SignInRequestMessageBuilder extends DefaultRequestMessagePackBuilder {
     @Override
     public void Init(P8583Fields fields) {
         super.Init(fields);

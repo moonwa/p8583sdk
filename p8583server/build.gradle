@@ -17,6 +17,7 @@ repositories {
 
 dependencies {
     compile project(':p8583')
+    compile('net.sf.json-lib:json-lib:2.4:jdk15')
     compile('org.apache.mina:mina-core:2.0.9')
     compile('commons-codec:commons-codec:1.10')
     compile('org.apache.commons:commons-lang3:3.3.2')

@@ -1,8 +1,9 @@
-package com.denovo.p8583;
+package com.denovo.p8583.test;
 
+import com.denovo.p8583.P8583Fields;
 import com.denovo.p8583.fields.BinaryVarLengthP8583Field;
 
-public class SignInResponseMessageParser extends DefaultResponseMessageParser{
+class SignInResponseMessageParser extends DefaultResponseMessageParser {
     @Override
     public void Init(P8583Fields fields) {
         super.Init(fields);
