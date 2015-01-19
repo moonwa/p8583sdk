@@ -8,9 +8,10 @@ class SignInRequestMessage extends DefaultRequestMessage {
     private String password;
     private String serialNo;
     private String batchNo;
+    private byte[] mac;
 
-    public SignInRequestMessage(String messageType, byte[] tpud, byte[] mac) {
-        super(messageType, tpud, mac);
+    public SignInRequestMessage(String messageType, byte[] tpud) {
+        super(messageType, tpud);
     }
 
     public String getUserName() {
@@ -43,5 +44,13 @@ class SignInRequestMessage extends DefaultRequestMessage {
 
     public void setBatchNo(String batchNo) {
         this.batchNo = batchNo;
+    }
+
+    public byte[] getMac() {
+        return mac;
+    }
+
+    public void setMac(byte[] mac) {
+        this.mac = mac;
     }
 }

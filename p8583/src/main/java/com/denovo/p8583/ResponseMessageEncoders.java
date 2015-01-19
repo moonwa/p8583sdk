@@ -27,8 +27,8 @@ public class ResponseMessageEncoders {
         bytes.add((byte) 0);
         bytes.add((byte) 0);
         bytes.add((byte) 0);
-        bytes.add((byte) Integer.parseInt(pack.getMessageType().substring(0, 2)));
-        bytes.add((byte) Integer.parseInt(pack.getMessageType().substring(2, 4)));
+        bytes.add((byte) Integer.parseInt(pack.getMessageType().substring(0, 2), 16));
+        bytes.add((byte) Integer.parseInt(pack.getMessageType().substring(2, 4), 16));
         String[] bitMaps = new String[8];
 
         for(int i = 0; i < 64; i++){

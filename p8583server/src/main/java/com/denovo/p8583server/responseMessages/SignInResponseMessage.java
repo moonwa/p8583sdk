@@ -1,6 +1,7 @@
 package com.denovo.p8583server.responseMessages;
 
 public class SignInResponseMessage extends DefaultResponseMessage {
+
     public SignInResponseMessage(String messageType, byte[] tpud) {
         super(messageType, tpud);
     }
@@ -22,5 +23,6 @@ public class SignInResponseMessage extends DefaultResponseMessage {
     public void setTransportationKey(String transportationKey) {
         this.transportationKey = transportationKey;
     }
+
 
 }

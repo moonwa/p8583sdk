@@ -8,10 +8,10 @@ import org.junit.Test;
 /**
  * Created by 013495 on 2015/1/19.
  */
-public class HandlerTest {
+public class HandlersTest {
     @Test
     public void signInHandlerTest() throws Exception {
-        SignInRequestMessage requestMessage = new SignInRequestMessage("0800", new byte[0], new byte[0]);
+        SignInRequestMessage requestMessage = new SignInRequestMessage("0800", new byte[0]);
         requestMessage.setPassword("abc123");
         requestMessage.setUserName("hi26");
         requestMessage.setTerminalId("P0000055");

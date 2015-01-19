@@ -22,9 +22,11 @@ public class P583CodeEncoder implements ProtocolEncoder {
 
         byte[] bytes = responseMessageEncoders.pack(msg);
         IoBuffer buffer = IoBuffer.allocate(2 + bytes.length);
-        buffer.putUnsigned((short)2 + bytes.length);
+        buffer.putUnsigned((byte) bytes.length / 256);
+        buffer.putUnsigned((byte) bytes.length % 256);
         buffer.put(bytes);
-        out.write(buffer.array());
+        buffer.flip();
+        out.write(buffer);
     }
 
     public void dispose(IoSession session) throws Exception {

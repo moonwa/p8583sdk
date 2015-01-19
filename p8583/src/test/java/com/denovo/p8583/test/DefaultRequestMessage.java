@@ -5,8 +5,8 @@ import com.denovo.p8583.RequestMessage;
 class DefaultRequestMessage extends RequestMessage {
     private String terminalId;
     private String clientId;
-    public DefaultRequestMessage(String messageType, byte[] tpud, byte[] mac) {
-        super(messageType, tpud, mac);
+    public DefaultRequestMessage(String messageType, byte[] tpud) {
+        super(messageType, tpud);
     }
 
     /*

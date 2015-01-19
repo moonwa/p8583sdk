@@ -40,9 +40,7 @@ public abstract class RequestMessageBuilder {
         return createRequestMessage(p8583Pack);
     }
 
-    protected byte[] getMac(P8583Pack p8583Pack) {
-        return p8583Pack.getByteArray(64);
-    }
+
 
     protected abstract RequestMessage createRequestMessage(P8583Pack p8583Pack) throws Exception;
 }
