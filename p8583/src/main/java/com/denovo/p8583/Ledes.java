@@ -1,15 +1,12 @@
 package com.denovo.p8583;
 
-import com.sun.crypto.provider.DESCipher;
 import org.apache.commons.codec.binary.Hex;
-import sun.security.krb5.internal.crypto.Des;
 
-import javax.crypto.*;
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.IvParameterSpec;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 
 /**
  * Created by moon.wa on 2015/1/19.

@@ -16,6 +16,7 @@ public class HandlersTest {
         requestMessage.setUserName("hi26");
         requestMessage.setTerminalId("P0000055");
         requestMessage.setClientId("800006");
+        requestMessage.setBatchNo("000000800006");
         SigninHandler handler = new SigninHandler(requestMessage);
         SignInResponseMessage msg = (SignInResponseMessage) handler.handle();
     }

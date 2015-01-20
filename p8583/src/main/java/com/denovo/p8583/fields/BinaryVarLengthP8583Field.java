@@ -35,7 +35,7 @@ public class BinaryVarLengthP8583Field extends P8583Field {
         }
 
         int actual_len = len;
-        // 跳过自动补0
+        // client sent : 001 => 0010
         if (len % 2 == 1) {
             actual_len = actual_len + 1;
         }
