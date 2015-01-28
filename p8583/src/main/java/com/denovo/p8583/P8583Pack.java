@@ -46,7 +46,9 @@ public class P8583Pack {
     }
 
     public void setString(int index, String text) throws Exception {
-        this.p8583Fields.get(index - 1).setString(  text);
+        if(text != null ) {
+            this.p8583Fields.get(index - 1).setString(text);
+        }
     }
 
     public byte[] buildData(int index) {

@@ -17,9 +17,9 @@ public class RequestMessageBuilders {
         return builder.pack(bytes, messageType);
     }
     public RequestMessage build(byte[] bytes) throws Exception {
+      //消息类型 0800 是签到
         String messageType = StringUtils.leftPad(Integer.toHexString(bytes[11]), 2, '0') + StringUtils.leftPad(Integer.toHexString(bytes[12]), 2, '0');
-
-        RequestMessageBuilder builder = getBuilder(messageType);
+         RequestMessageBuilder builder = getBuilder(messageType);
         return builder.build(builder.pack(bytes, messageType));
     }
     public RequestMessageBuilder getBuilder(String messageType) {

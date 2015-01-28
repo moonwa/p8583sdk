@@ -1,9 +1,14 @@
-package com.denovo.p8583server.handlers;
+package com.denovo.p8583server.handlers.jsonmodel;
 
+//签到 跟 签退 共用
 public class SignInEntry{
-        public String accountName;
+       //登录名
+        private String accountName;
+       //密码
         private String passwd ;
+      //终端号
         private String terminalCode;
+      //商户号
         private String businessCode;
 
     public String getAccountName(){

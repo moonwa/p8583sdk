@@ -32,8 +32,10 @@ public abstract class P8583Field {
     };
 
     public void setString(String text) throws Exception {
-        this.setData(text.getBytes("utf8"));
-    }
+        if(text != null || text.length() > 0) {
+            this.setData(text.getBytes("gb2312"));
+        }
+     }
 
     public byte[] buildData(){
         return buildData(this.data);

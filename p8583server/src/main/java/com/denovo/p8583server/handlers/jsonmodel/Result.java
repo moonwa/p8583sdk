@@ -1,4 +1,4 @@
-package com.denovo.p8583server.handlers;
+package com.denovo.p8583server.handlers.jsonmodel;
 
 /**
  * Created by 013495 on 2015/1/19.

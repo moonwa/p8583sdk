@@ -4,14 +4,14 @@ import com.denovo.p8583.Encoder;
 import com.denovo.p8583.Ledes;
 import com.denovo.p8583.MessageHandler;
 import com.denovo.p8583.ResponseMessage;
+import com.denovo.p8583server.handlers.jsonmodel.Result;
+import com.denovo.p8583server.handlers.jsonmodel.SignInEntry;
 import com.denovo.p8583server.requestMessages.SignInRequestMessage;
 import com.denovo.p8583server.responseMessages.SignInResponseMessage;
 import com.denovo.p8583server.memweb.IMemberWebService;
 import com.denovo.p8583server.memweb.IMemberWebServiceService;
-import jdk.nashorn.internal.parser.JSONParser;
 import net.sf.json.JSONObject;
 import org.apache.commons.codec.binary.Hex;
-import sun.security.krb5.internal.crypto.Des;
 
 import java.security.MessageDigest;
 import java.util.UUID;
@@ -31,7 +31,7 @@ public class SigninHandler implements MessageHandler {
 
         msg.setResult(0);
 
-        String shop_key = "3131313131313131";
+        String shop_key = "1111111111111111";
 
         String batchno = requestMessage.getBatchNo();
         batchno = batchno.substring(0, 2) + "000000" + batchno.substring(8, batchno.length());
@@ -56,7 +56,7 @@ public class SigninHandler implements MessageHandler {
         obj = JSONObject.fromObject(resp);
         Result result = (Result) JSONObject.toBean(obj, Result.class);
 
-        if (result.getCode() == "0") {
+        if (result.getCode().equals("0")) {
             String key1 = UUID.randomUUID().toString().substring(0, 8);
             String encryptKey1 = Ledes.encrypt(key1.getBytes(), Encoder.toBcd(shop_key.getBytes()));
             String hash1 = Ledes.encrypt(new byte[8], key1.getBytes()).substring(0, 8);
@@ -69,7 +69,8 @@ public class SigninHandler implements MessageHandler {
         }
         else
         {
-        msg.setResult(10);
+            msg.setResultMsg(result.getErrorCode()+":"+result.getMsg());
+            msg.setResult(0x88);
         }
         return msg;
     }

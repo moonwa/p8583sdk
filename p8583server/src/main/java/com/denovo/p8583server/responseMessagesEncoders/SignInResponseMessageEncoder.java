@@ -16,6 +16,9 @@ public class SignInResponseMessageEncoder extends DefaultResponseMessageParser {
     @Override
     public void update(ResponseMessage message, P8583Pack pack) throws Exception {
         SignInResponseMessage msg = (SignInResponseMessage) message;
+        if(msg.getResult()!=0) {
+            pack.setString(47, msg.getResultMsg());
+        }
         pack.setString(62, msg.getTransportationKey());
         super.update(message, pack);
     }

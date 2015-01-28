@@ -13,6 +13,8 @@ public class DefaultResponseMessage extends ResponseMessage {
     }
     private int result;
 
+    private  String resultMsg;
+
     private String clientId;
     private String terminalId;
     public int getResult() {
@@ -21,6 +23,14 @@ public class DefaultResponseMessage extends ResponseMessage {
 
     public void setResult(int result) {
         this.result = result;
+    }
+
+    public String getResultMsg() {
+        return resultMsg;
+    }
+
+    public void setResultMsg(String resultMsg) {
+        this.resultMsg = resultMsg;
     }
 
     public String getClientId() {

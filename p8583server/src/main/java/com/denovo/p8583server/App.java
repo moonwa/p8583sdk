@@ -3,8 +3,14 @@ package com.denovo.p8583server;
 import com.denovo.p8583.ResponseMessageEncoders;
 import com.denovo.p8583.HandlerBuilders;
 import com.denovo.p8583.RequestMessageBuilders;
+import com.denovo.p8583server.handlerbuilders.DealHandlerBuilder;
+import com.denovo.p8583server.handlerbuilders.PosRegisteredHandlerBuilder;
 import com.denovo.p8583server.handlerbuilders.SigninHandlerBuilder;
+import com.denovo.p8583server.requestMessageBuilders.DealRequestMessageBuilder;
+import com.denovo.p8583server.requestMessageBuilders.PosRegisteredRequestMessageBuilder;
 import com.denovo.p8583server.requestMessageBuilders.SignInRequestMessageBuilder;
+import com.denovo.p8583server.responseMessagesEncoders.DealResponseMessageEncoder;
+import com.denovo.p8583server.responseMessagesEncoders.PosRegisteredResponseMessageEncoder;
 import com.denovo.p8583server.responseMessagesEncoders.SignInResponseMessageEncoder;
 import org.apache.mina.core.service.IoAcceptor;
 import org.apache.mina.core.session.IdleStatus;
@@ -23,14 +29,22 @@ public class App{
         // request message builders
         RequestMessageBuilders requestMessageBuilders = new RequestMessageBuilders();
         requestMessageBuilders.register("0800", new SignInRequestMessageBuilder());
+        requestMessageBuilders.register("0900", new PosRegisteredRequestMessageBuilder());
+        requestMessageBuilders.register("0200", new DealRequestMessageBuilder());
 
         ResponseMessageEncoders responseMessageEncoders = new ResponseMessageEncoders();
         responseMessageEncoders.register("0810", new SignInResponseMessageEncoder());
+        responseMessageEncoders.register("0910", new PosRegisteredResponseMessageEncoder());
+        responseMessageEncoders.register("0210", new DealResponseMessageEncoder());
+
+
         acceptor.getFilterChain().addLast( "codec", new ProtocolCodecFilter( new P8583CodecFactory(requestMessageBuilders, responseMessageEncoders)));
 
         // handler builders
         HandlerBuilders handlerBuilders = new HandlerBuilders();
-        handlerBuilders.register("0800", new SigninHandlerBuilder());
+        handlerBuilders.register("0800", new SigninHandlerBuilder());//签到
+        handlerBuilders.register("0900",new PosRegisteredHandlerBuilder());//pos机注册
+        handlerBuilders.register("0200",new DealHandlerBuilder());//交易
 
         acceptor.setHandler(new P8583AccepterHandler(handlerBuilders) );
 

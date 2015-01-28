@@ -26,7 +26,7 @@ public class BinaryFixLengthP8583Field extends P8583Field {
 
         actual_len = actual_len / 2;
 
-        byte[] data = Arrays.copyOfRange(bytes, ptr, ptr + actual_len / 2);
+        byte[] data = Arrays.copyOfRange(bytes, ptr, ptr + actual_len);
         data = Encoder.fromBcds(data);
 
         if (len % 2 == 1) {
@@ -34,7 +34,7 @@ public class BinaryFixLengthP8583Field extends P8583Field {
         }
         this.setData(data);
 
-        return actual_len / 2;
+        return actual_len;
     }
 
     @Override
