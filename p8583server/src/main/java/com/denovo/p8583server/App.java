@@ -4,12 +4,15 @@ import com.denovo.p8583.ResponseMessageEncoders;
 import com.denovo.p8583.HandlerBuilders;
 import com.denovo.p8583.RequestMessageBuilders;
 import com.denovo.p8583server.handlerbuilders.DealHandlerBuilder;
+import com.denovo.p8583server.handlerbuilders.DealRollbackHandlerBuilder;
 import com.denovo.p8583server.handlerbuilders.PosRegisteredHandlerBuilder;
 import com.denovo.p8583server.handlerbuilders.SigninHandlerBuilder;
 import com.denovo.p8583server.requestMessageBuilders.DealRequestMessageBuilder;
+import com.denovo.p8583server.requestMessageBuilders.DealRollbackRequestMessageBuilder;
 import com.denovo.p8583server.requestMessageBuilders.PosRegisteredRequestMessageBuilder;
 import com.denovo.p8583server.requestMessageBuilders.SignInRequestMessageBuilder;
 import com.denovo.p8583server.responseMessagesEncoders.DealResponseMessageEncoder;
+import com.denovo.p8583server.responseMessagesEncoders.DealRollbackResponseMessageEncoder;
 import com.denovo.p8583server.responseMessagesEncoders.PosRegisteredResponseMessageEncoder;
 import com.denovo.p8583server.responseMessagesEncoders.SignInResponseMessageEncoder;
 import org.apache.mina.core.service.IoAcceptor;
@@ -31,11 +34,13 @@ public class App{
         requestMessageBuilders.register("0800", new SignInRequestMessageBuilder());
         requestMessageBuilders.register("0900", new PosRegisteredRequestMessageBuilder());
         requestMessageBuilders.register("0200", new DealRequestMessageBuilder());
+        requestMessageBuilders.register("0400", new DealRollbackRequestMessageBuilder());
 
         ResponseMessageEncoders responseMessageEncoders = new ResponseMessageEncoders();
         responseMessageEncoders.register("0810", new SignInResponseMessageEncoder());
         responseMessageEncoders.register("0910", new PosRegisteredResponseMessageEncoder());
         responseMessageEncoders.register("0210", new DealResponseMessageEncoder());
+        responseMessageEncoders.register("0410", new DealRollbackResponseMessageEncoder());
 
 
         acceptor.getFilterChain().addLast( "codec", new ProtocolCodecFilter( new P8583CodecFactory(requestMessageBuilders, responseMessageEncoders)));
@@ -45,6 +50,8 @@ public class App{
         handlerBuilders.register("0800", new SigninHandlerBuilder());//签到
         handlerBuilders.register("0900",new PosRegisteredHandlerBuilder());//pos机注册
         handlerBuilders.register("0200",new DealHandlerBuilder());//交易
+        handlerBuilders.register("0400",new DealRollbackHandlerBuilder());//冲正
+       // 0820  签退
 
         acceptor.setHandler(new P8583AccepterHandler(handlerBuilders) );
 

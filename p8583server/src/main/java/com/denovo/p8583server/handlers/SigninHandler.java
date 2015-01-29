@@ -4,6 +4,7 @@ import com.denovo.p8583.Encoder;
 import com.denovo.p8583.Ledes;
 import com.denovo.p8583.MessageHandler;
 import com.denovo.p8583.ResponseMessage;
+import com.denovo.p8583server.handlers.handlercommon.JsonHelper;
 import com.denovo.p8583server.handlers.jsonmodel.Result;
 import com.denovo.p8583server.handlers.jsonmodel.SignInEntry;
 import com.denovo.p8583server.requestMessages.SignInRequestMessage;
@@ -38,23 +39,7 @@ public class SigninHandler implements MessageHandler {
         msg.setBatchNo(batchno);
         msg.setRequestMessage(requestMessage);
 
-        IMemberWebService ser = new IMemberWebServiceService().getIMemberWebServicePort();
-        SignInEntry model = new SignInEntry();
-        model.setBusinessCode(requestMessage.getClientId().replace("F", ""));
-        model.setAccountName(requestMessage.getUserName());
-        model.setTerminalCode(requestMessage.getTerminalId());
-        MessageDigest md5 =  MessageDigest.getInstance("md5");
-        model.setPasswd(Hex.encodeHexString(md5.digest(requestMessage.getPassword().getBytes("utf8"))));
-
-
-        JSONObject obj = JSONObject.fromObject(model);
-        String phoneNumRegStr = obj.toString();
-
-
-        String entryptParams = Hex.encodeHexString(md5.digest((phoneNumRegStr + requestMessage.getMac()).getBytes("utf8")));
-        String resp = ser.execute("posAccountLogin", "1.0", phoneNumRegStr, entryptParams);
-        obj = JSONObject.fromObject(resp);
-        Result result = (Result) JSONObject.toBean(obj, Result.class);
+        Result result=JsonHelper.GetSignInResult(requestMessage);
 
         if (result.getCode().equals("0")) {
             String key1 = UUID.randomUUID().toString().substring(0, 8);

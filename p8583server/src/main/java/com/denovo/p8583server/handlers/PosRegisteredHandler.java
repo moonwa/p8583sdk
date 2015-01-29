@@ -2,6 +2,7 @@ package com.denovo.p8583server.handlers;
 
 import com.denovo.p8583.MessageHandler;
 import com.denovo.p8583.ResponseMessage;
+import com.denovo.p8583server.handlers.handlercommon.JsonHelper;
 import com.denovo.p8583server.handlers.jsonmodel.PosRegisteredEntry;
 import com.denovo.p8583server.handlers.jsonmodel.Result;
 import com.denovo.p8583server.memweb.IMemberWebService;
@@ -33,20 +34,7 @@ public class PosRegisteredHandler implements MessageHandler {
         msg.setBatchNo(batchno);
         msg.setRequestMessage(requestMsg);
 
-        IMemberWebService ser = new IMemberWebServiceService().getIMemberWebServicePort();
-        PosRegisteredEntry model = new PosRegisteredEntry();
-        model.setBusinessCode(requestMsg.getClientId().replace(" ", ""));//商户号
-        model.setTerminalCode(requestMsg.getTerminalId());//终端号
-        model.setMacAddress(requestMsg.getPosAddress());
-
-        JSONObject obj = JSONObject.fromObject(model);
-        String phoneNumRegStr = obj.toString();
-
-        MessageDigest md5 =  MessageDigest.getInstance("md5");
-        String entryptParams = Hex.encodeHexString(md5.digest((phoneNumRegStr + requestMsg.getMac()).getBytes("utf8")));
-        String resp = ser.execute("posTerminalRegister", "1.0", phoneNumRegStr, entryptParams);
-        obj = JSONObject.fromObject(resp);
-        Result result = (Result) JSONObject.toBean(obj, Result.class);
+       Result result=JsonHelper.GetPosRegisteredResult(requestMsg);
 
         if (result.getCode().equals("0")) {
 
