@@ -21,8 +21,17 @@ public class DealRollbackHandler implements MessageHandler {
 
     public ResponseMessage handle() throws Exception {
         DealRollbackResponseMessage msg = new DealRollbackResponseMessage("0410", requestMessage.getTpud());
+        msg.setRequestMessage(requestMessage);
+        msg.setResult(0);
          //冲正
-        Result phoneAndCardNumRegResult = JsonHelper.GetRoolbackResult(requestMessage);
+        Result dealRollbackResult = JsonHelper.GetRoolbackResult(requestMessage);
+
+
+        if (dealRollbackResult.getCode().equals("0")) {
+
+        }
+
         return msg;
+
     }
 }

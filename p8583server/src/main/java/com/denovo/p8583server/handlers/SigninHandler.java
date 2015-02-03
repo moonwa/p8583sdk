@@ -4,6 +4,7 @@ import com.denovo.p8583.Encoder;
 import com.denovo.p8583.Ledes;
 import com.denovo.p8583.MessageHandler;
 import com.denovo.p8583.ResponseMessage;
+import com.denovo.p8583server.handlers.handlercommon.Globals;
 import com.denovo.p8583server.handlers.handlercommon.JsonHelper;
 import com.denovo.p8583server.handlers.jsonmodel.Result;
 import com.denovo.p8583server.handlers.jsonmodel.SignInEntry;
@@ -51,6 +52,7 @@ public class SigninHandler implements MessageHandler {
             String hash2= Ledes.encrypt(new byte[8], key2.getBytes()).substring(0, 8);
 
             msg.setTransportationKey(encryptKey1 + hash1 + encryptKey2 + hash2);
+           Globals.SetKeyEntry(requestMessage.getClientId().trim(),requestMessage.getTerminalId().trim() ,key1,key2);
         }
         else
         {

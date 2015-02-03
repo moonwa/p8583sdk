@@ -54,4 +54,6 @@ public class DefaultResponseMessage extends ResponseMessage {
         this.setClientId( defaultRequestMessage.getClientId());
         this.setTerminalId(defaultRequestMessage.getTerminalId());
     }
+
+
 }

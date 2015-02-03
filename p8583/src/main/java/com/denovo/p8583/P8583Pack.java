@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class P8583Pack {
     private byte[] tpud;
     private String messageType;
-    private ArrayList<P8583Field> p8583Fields;
+    public ArrayList<P8583Field> p8583Fields;
 
     public P8583Pack(byte[] tpud, String messageType, ArrayList<P8583Field> p8583Fields) {
         this.tpud = tpud;

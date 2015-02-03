@@ -44,9 +44,7 @@ public class ConsumeEntry {
             this.posTerminalCode = posTerminalCode;
         }
 
-        public void setGoods(String goods) {
-            this.goods = goods;
-        }
+
 
         public void setOperator(String operator) {
             this.operator = operator;
@@ -58,7 +56,7 @@ public class ConsumeEntry {
 
         public String getOrderFormNum() {
 
-            return orderFormNum;
+            return null;
         }
 
         public String getTerminalFlowNum() {
@@ -74,7 +72,7 @@ public class ConsumeEntry {
         }
 
         public String getIntegralMultiple() {
-            return integralMultiple;
+            return null;
         }
 
         public String getLoginNum() {
@@ -93,9 +91,7 @@ public class ConsumeEntry {
             return posTerminalCode;
         }
 
-        public String getGoods() {
-            return goods;
-        }
+
 
         public String getOperator() {
             return operator;
@@ -113,7 +109,7 @@ public class ConsumeEntry {
         private String passwd;
         private String channel;
         private String posTerminalCode;
-        private String goods;
+
         public String operator;
         private String businessCode;
     }

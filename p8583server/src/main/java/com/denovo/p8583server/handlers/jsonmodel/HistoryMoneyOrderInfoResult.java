@@ -5,13 +5,13 @@ package com.denovo.p8583server.handlers.jsonmodel;
  */
 public class HistoryMoneyOrderInfoResult extends ResultBase {
 
-    private  PayDetail result;
+    private  PayResult result;
 
-    public void setResult(PayDetail result) {
+    public void setResult(PayResult result) {
         this.result = result;
     }
 
-    public PayDetail getResult() {
+    public PayResult getResult() {
         return result;
     }
 }

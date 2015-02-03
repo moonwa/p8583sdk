@@ -34,4 +34,16 @@ public class DealRollbackRequestMessage extends DefaultRequestMessage {
     public String getOperator() {
         return operator;
     }
+
+
+    public void setDealamount(double  dealamount) {
+        this.dealamount = dealamount;
+    }
+
+    public double  getDealamount() {
+
+        return dealamount;
+    }
+
+    private  double  dealamount;
 }

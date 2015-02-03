@@ -69,6 +69,7 @@ public  class JsonHelper {
         model.setLoginNum(request.getCardNumber());
         model.setPasswd(Hex.encodeHexString(md5.digest(request.getCardOrPhoneNumberPassWork().getBytes("utf8"))));
         model.setChannel("自助终端");
+
         model.setBusinessCode(request.getClientId().replace(" ", ""));
         model.setOperator(request.getOperator());
         model.setPosTerminalCode(request.getTerminalId());
@@ -191,6 +192,7 @@ public  class JsonHelper {
         String entryptParams = Hex.encodeHexString(md5.digest((strJson + request.getMac()).getBytes("utf8")));
         String resp = ser.execute("charge", "1.0", strJson, entryptParams);
         obj = JSONObject.fromObject(resp);
+
         return  (HistoryMoneyOrderInfoResult) JSONObject.toBean(obj, HistoryMoneyOrderInfoResult.class);
 
     }
