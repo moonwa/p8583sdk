@@ -15,6 +15,9 @@ public class Encoder {
     public static byte[] fromBcd(byte value) {
         return StringUtils.leftPad(Integer.toHexString(value), Integer.SIZE / 4, '0').substring((Integer.SIZE - Byte.SIZE)  / 4, Integer.SIZE / 4).getBytes();
     }
+    public static byte[] fromBcdToUpper(byte value) {
+        return StringUtils.leftPad(Integer.toHexString(value), Integer.SIZE / 4, '0').substring((Integer.SIZE - Byte.SIZE)  / 4, Integer.SIZE / 4).toUpperCase().getBytes();
+    }
     public static byte[] toBcd(byte[] data) {
         if(data.length % 2 == 1){
             data = Arrays.copyOf(data, data.length + 1);

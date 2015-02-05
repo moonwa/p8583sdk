@@ -13,6 +13,7 @@ public abstract class RequestMessageBuilder {
     public abstract void Init(P8583Fields fields);
 
     public P8583Pack pack(byte[] bytes, String messageType) throws Exception {
+
         byte[] tpud = Arrays.copyOfRange(bytes, 0, 5);
 
         String bitBitmap = "";
@@ -26,6 +27,7 @@ public abstract class RequestMessageBuilder {
         P8583Fields fields = new P8583Fields(p8583Fields);
         this.Init(fields);
         P8583Pack pack = new P8583Pack(tpud, messageType, fields.getFields());
+        pack.data=bytes;
         int ptr = 21;
         char[] flags = bitBitmap.toCharArray();
         for (int i = 0; i < flags.length; i++) {

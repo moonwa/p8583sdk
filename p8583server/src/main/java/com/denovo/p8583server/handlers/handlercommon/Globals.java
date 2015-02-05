@@ -40,7 +40,6 @@ public class Globals {
         if(_keys.containsKey(posName)) {
           return  (KeysEntry)_keys.get(posName).get(0);
         }
-
        return null;
     }
 

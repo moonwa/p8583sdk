@@ -47,7 +47,11 @@ public class ResponseMessageEncoders {
         for(int i = 0; i < result.length; i++){
             result[i] = bytes.get(i);
         }
+
+
         return result;
+
+
     }
 
     public ResponseMessageParser getMessageParser(String messageType) {
