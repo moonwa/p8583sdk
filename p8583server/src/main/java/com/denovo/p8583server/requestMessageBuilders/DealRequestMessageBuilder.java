@@ -18,7 +18,6 @@ public class DealRequestMessageBuilder extends DefaultRequestMessagePackBuilder 
     protected RequestMessage createRequestMessage(P8583Pack p8583Pack) throws Exception {
         DealRequestMessage request = new DealRequestMessage(p8583Pack.getMessageType(), p8583Pack.getTpud());
         super.update(p8583Pack, request);
-       // request.setSerialNo(getSerialNo(p8583Pack));
         request.setSerialNo(getUpdateSerialNo(p8583Pack));
         request.setBatchNo(getBatchNo(p8583Pack));
         request.setDealType(getDealType(p8583Pack));
@@ -30,39 +29,14 @@ public class DealRequestMessageBuilder extends DefaultRequestMessagePackBuilder 
         request.setPhoneNumber(getPhoneNumber(p8583Pack));
         request.setOperator(getOperator(p8583Pack));
         request.setP8583Pack(p8583Pack.p8583Fields);
-
         request.setData(p8583Pack.data);
-       // ArrayList<Byte> bytes = new ArrayList<Byte>();
-        //for(int i : p8583Pack.getFieldIndexs()){
-           // bytes.addAll(Encoder.toArray(p8583Pack.buildData(i)));
-        //}
-        //byte[] result = new byte[bytes.size()];
-        //for(int i = 0; i < result.length; i++){
-          //  result[i] = bytes.get(i);
-        //}
-
-
-
-
-
-
-
         return request;
     }
-
-
-
-
-
-
-
-
-
     private String getUpdateSerialNo(P8583Pack p8583Pack)throws Exception {
         if (p8583Pack.getHasValue(59)) {
             return p8583Pack.getString(59);
         }
-        return  "";
+        return  null;
 
     }
 
@@ -74,9 +48,6 @@ private  String getPhoneNumber(P8583Pack p8583Pack)throws Exception {
 }
     private Double getDealamount(P8583Pack p8583Pack) throws Exception {
         if (p8583Pack.getHasValue(4)){
-         // String s= StringUtils.leftPad((new BigDecimal(p8583Pack.getString(4)).multiply(new BigDecimal(100)).toString()),0);
-           //double ddd= Double.parseDouble(s);
-          // double dd= ddd/100;
             Double d = Double.parseDouble(p8583Pack.getString(4));
            return  Double.parseDouble(new DecimalFormat("0.00").format(d))/100;
         }

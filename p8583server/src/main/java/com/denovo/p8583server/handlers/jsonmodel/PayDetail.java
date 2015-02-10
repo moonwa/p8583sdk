@@ -10,4 +10,22 @@ import java.util.List;
 public class PayDetail {
     private int total;
     private List<HistoryMoneyOrderInfoResultBody> rows;
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public void setRows(List<HistoryMoneyOrderInfoResultBody> rows) {
+        this.rows = rows;
+    }
+
+    public List<HistoryMoneyOrderInfoResultBody> getRows() {
+
+        return rows;
+    }
+
+    public int getTotal() {
+
+        return total;
+    }
 }

@@ -20,7 +20,6 @@ public class ResponseMessageEncoders {
     public byte[] pack(P8583Pack pack ) {
         ArrayList<Byte> bytes = new ArrayList<Byte>();
         bytes.addAll(Encoder.toArray(pack.getTpud()));
-
         bytes.add((byte) 96);
         bytes.add((byte) 34);
         bytes.add((byte) 0);
@@ -30,7 +29,6 @@ public class ResponseMessageEncoders {
         bytes.add((byte) Integer.parseInt(pack.getMessageType().substring(0, 2), 16));
         bytes.add((byte) Integer.parseInt(pack.getMessageType().substring(2, 4), 16));
         String[] bitMaps = new String[8];
-
         for(int i = 0; i < 64; i++){
             if(bitMaps[i/8] == null){
                 bitMaps[i/8] = "";
@@ -47,8 +45,6 @@ public class ResponseMessageEncoders {
         for(int i = 0; i < result.length; i++){
             result[i] = bytes.get(i);
         }
-
-
         return result;
 
 

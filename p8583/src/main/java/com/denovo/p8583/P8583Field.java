@@ -20,7 +20,7 @@ public abstract class P8583Field {
 
 
     public String getString() throws Exception {
-        return new String(this.data, "utf8");
+        return new String(this.data, "gb2312");
     }
 
     public byte[] getByteArray() {

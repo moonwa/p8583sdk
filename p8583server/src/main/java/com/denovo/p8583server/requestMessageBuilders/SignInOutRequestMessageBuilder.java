@@ -3,23 +3,21 @@ package com.denovo.p8583server.requestMessageBuilders;
 import com.denovo.p8583.P8583Fields;
 import com.denovo.p8583.P8583Pack;
 import com.denovo.p8583.RequestMessage;
-import com.denovo.p8583.fields.BinaryVarLengthP8583Field;
-import com.denovo.p8583server.requestMessages.SignInRequestMessage;
+import com.denovo.p8583server.requestMessages.SignInOutRequestMessage;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * Created by moonwa on 15-1-18.
+ * Created by Administrator on 2015/2/9.
  */
-public class SignInRequestMessageBuilder extends DefaultRequestMessagePackBuilder {
+public class SignInOutRequestMessageBuilder extends DefaultRequestMessagePackBuilder {
     @Override
     public void Init(P8583Fields fields) {
         super.Init(fields);
-        fields.addP8583ItemAt(62, new BinaryVarLengthP8583Field(72, 3, true));
     }
 
     @Override
     protected RequestMessage createRequestMessage(P8583Pack p8583Pack) throws Exception {
-        SignInRequestMessage request = new SignInRequestMessage(p8583Pack.getMessageType(), p8583Pack.getTpud());
+        SignInOutRequestMessage request = new SignInOutRequestMessage(p8583Pack.getMessageType(), p8583Pack.getTpud());
         super.update(p8583Pack, request);
 
         request.setUserName(getUserName(p8583Pack));
@@ -60,4 +58,5 @@ public class SignInRequestMessageBuilder extends DefaultRequestMessagePackBuilde
         }
         return null;
     }
+
 }

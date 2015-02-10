@@ -12,7 +12,7 @@ public class P8583Pack {
         for(int i = 0; i < p8583Fields.size(); i++){
             if(this.getHasValue(i+1))
             {
-                text += "\r\n" + (i+1) + this.getString(i + 1);
+                text += "\r\n" + (i+1) +"--"+ this.getString(i + 1);
             }
         }
         return text;

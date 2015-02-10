@@ -46,14 +46,10 @@ public class SigninHandler implements MessageHandler {
             String key1 = UUID.randomUUID().toString().substring(0, 8);
             String encryptKey1 = Ledes.encrypt(key1.getBytes(), Encoder.toBcd(shop_key.getBytes()));
             String hash1 = Ledes.encrypt(new byte[8], key1.getBytes()).substring(0, 8);
-
             String key2 = UUID.randomUUID().toString().substring(0, 8);
             String encryptKey2 = Ledes.encrypt(key2.getBytes(), Encoder.toBcd(shop_key.getBytes()));
             String hash2= Ledes.encrypt(new byte[8], key2.getBytes()).substring(0, 8);
-
             msg.setTransportationKey(encryptKey1 + hash1 + encryptKey2 + hash2);
-//           key1="d05f17fb";
-//            key2="3771d94d";
            Globals.SetKeyEntry(requestMessage.getClientId().trim(),requestMessage.getTerminalId().trim() ,key1,key2);
         }
         else

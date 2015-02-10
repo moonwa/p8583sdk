@@ -3,19 +3,17 @@ package com.denovo.p8583server.handlers.handlercommon;
 import com.denovo.p8583server.handlers.jsonmodel.*;
 import com.denovo.p8583server.memweb.IMemberWebService;
 import com.denovo.p8583server.memweb.IMemberWebServiceService;
-import com.denovo.p8583server.requestMessages.DealRequestMessage;
+import com.denovo.p8583server.requestMessages.*;
 
-import com.denovo.p8583server.requestMessages.DealRollbackRequestMessage;
-import com.denovo.p8583server.requestMessages.PosRegisteredRequestMessage;
-import com.denovo.p8583server.requestMessages.SignInRequestMessage;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.lang3.StringUtils;
 
+import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.UUID;
-import java.util.Date;
+import java.util.*;
 
 /**
  * Created by Administrator on 2015/1/29.
@@ -39,6 +37,24 @@ public  class JsonHelper {
    return (Result) JSONObject.toBean(obj, Result.class);
    }
 
+    //签退
+    public static Result GetSignInOutResult(SignInOutRequestMessage requestMessage) throws Exception {
+        IMemberWebService ser = new IMemberWebServiceService().getIMemberWebServicePort();
+        SignInEntry model = new SignInEntry();
+        model.setBusinessCode(requestMessage.getClientId().replace("F",""));
+        model.setAccountName(requestMessage.getUserName());
+        model.setTerminalCode(requestMessage.getTerminalId());
+        MessageDigest md5 = MessageDigest.getInstance("md5");
+        model.setPasswd(Hex.encodeHexString(md5.digest(requestMessage.getPassword().getBytes("utf8"))));
+        JSONObject obj = JSONObject.fromObject(model);
+        String phoneNumRegStr = obj.toString();
+        String entryptParams = Hex.encodeHexString(md5.digest((phoneNumRegStr + requestMessage.getMac()).getBytes("utf8")));
+        String resp = ser.execute("posAccountLogOut", "1.0", phoneNumRegStr, entryptParams);
+        obj=JSONObject.fromObject(resp);
+        return (Result) JSONObject.toBean(obj, Result.class);
+    }
+
+
     //终端注册
     public static Result  GetPosRegisteredResult(PosRegisteredRequestMessage requestMsg) throws Exception{
         IMemberWebService ser = new IMemberWebServiceService().getIMemberWebServicePort();
@@ -55,9 +71,7 @@ public  class JsonHelper {
         String resp = ser.execute("posTerminalRegister", "1.0", phoneNumRegStr, entryptParams);
         obj = JSONObject.fromObject(resp);
        return  (Result) JSONObject.toBean(obj, Result.class);
-
     }
-
     //会员扣款
     public  static  ConsumeResult GetConsumeResult(DealRequestMessage request) throws Exception{
         IMemberWebService ser = new IMemberWebServiceService().getIMemberWebServicePort();
@@ -69,7 +83,6 @@ public  class JsonHelper {
         model.setLoginNum(request.getCardNumber());
         model.setPasswd(Hex.encodeHexString(md5.digest(request.getCardOrPhoneNumberPassWork().getBytes("utf8"))));
         model.setChannel("自助终端");
-
         model.setBusinessCode(request.getClientId().replace(" ", ""));
         model.setOperator(request.getOperator());
         model.setPosTerminalCode(request.getTerminalId());
@@ -79,10 +92,7 @@ public  class JsonHelper {
         String resp = ser.execute("consume", "1.0", strJson, entryptParams);
         obj = JSONObject.fromObject(resp);
         return  (ConsumeResult) JSONObject.toBean(obj, ConsumeResult.class);
-
     }
-
-
     //查询余额和积分
     public static   MemberBalanceResult  GetMemberBalanceResult(DealRequestMessage requestMessage) throws Exception{
         IMemberWebService ser = new IMemberWebServiceService().getIMemberWebServicePort();
@@ -100,7 +110,7 @@ public  class JsonHelper {
         return  (MemberBalanceResult) JSONObject.toBean(obj, MemberBalanceResult.class);
     }
     //退款时 先 返回交易历史记录
-    public static HistoryMoneyOrderInfoResult GetHistoryMoneyOrderInfoResult(DealRequestMessage request) throws Exception {
+    public static Result GetHistoryMoneyOrderInfoResult(DealRequestMessage request) throws Exception {
         IMemberWebService ser = new IMemberWebServiceService().getIMemberWebServicePort();
         MessageDigest md5 =  MessageDigest.getInstance("md5");
         HistoryMoneyOrderInfoEntry model=new HistoryMoneyOrderInfoEntry();
@@ -113,15 +123,49 @@ public  class JsonHelper {
         model.setEndDate(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
         model.setPageSize("3");
         model.setPageNum("1");
-
-
         JSONObject obj = JSONObject.fromObject(model);
         String strJson = obj.toString();
         String entryptParams = Hex.encodeHexString(md5.digest((strJson + request.getMac()).getBytes("utf8")));
-        String resp = ser.execute("getHistoryMoneyOrderInfo", "1.0", strJson, entryptParams);
-        obj = JSONObject.fromObject(resp);
-        return  (HistoryMoneyOrderInfoResult) JSONObject.toBean(obj, HistoryMoneyOrderInfoResult.class);
+        Result result=new Result();
+        try {
+            String resp = ser.execute("getHistoryMoneyOrderInfo", "1.0", strJson, entryptParams);
+            obj = JSONObject.fromObject(resp);
+            Map<String,Class<?>> map  = new HashMap<String,Class<?>>();
+            map.put("code",String.class);
+            map.put("msg",String.class);
+            map.put("result",PayDetail.class);
+            map.put("errorCode",String.class);
+            map.put("total",Integer.class);
+            map.put("rows",HistoryMoneyOrderInfoResultBody.class);
+            MemberMoneyOrderPayDetailResult payDetailResult  = (MemberMoneyOrderPayDetailResult)JSONObject.toBean( JSONObject.fromObject(resp), MemberMoneyOrderPayDetailResult.class, map );
+            result.setCode(payDetailResult.getCode());
+            if (payDetailResult.getCode().equals("0")) {
+                PayDetail payDetail = payDetailResult.getResult();
+                List<HistoryMoneyOrderInfoResultBody> list = payDetail.getRows();
+                String str = "";
+                int index = 0;
+                for(int i = 0; i < list.size(); i++)
+                {
+                    HistoryMoneyOrderInfoResultBody body= list.get(i);
+                    if (index !=0 ) {
+                        str += ",";
+                    }
+                    String strs[] =  body.getTransactionTime().replaceAll(" ", "-").split("-");
+                    str +=  String.format("%1$s|%2$s|%3$s", body.getTransactionNum(), StringUtils.leftPad((Integer.toString((int) Math.abs(body.getTransactionAmount() * 100))),12, '0'),strs[1]+strs[2]);
+                    index++;
+                }
+                result.setMsg(str);
+            }else {
+                result.setErrorCode(payDetailResult.getErrorCode());
+                result.setMsg(payDetailResult.getMsg());
+            }
+        }catch (Exception ex){
+            result.setCode("96");
+            result.setErrorCode("错误信息"+ex.getMessage());
+        }
+        return  result;
     }
+
 
     //退款
     public   static  ConsumeResult  GetRefundResult(DealRequestMessage request) throws Exception {
@@ -214,14 +258,12 @@ public  class JsonHelper {
         return  (Result) JSONObject.toBean(obj, Result.class);
     }
     private static String GetDate()  throws Exception{
-
         SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd");
         Date beginDate = new Date();
         Calendar date = Calendar.getInstance();
         date.setTime(beginDate);
         date.set(Calendar.DATE, date.get(Calendar.DATE) - 60);
         Date endDate = dft.parse(dft.format(date.getTime()));
-
         return    dft.format(endDate);
     }
 

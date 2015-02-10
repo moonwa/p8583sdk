@@ -1,5 +1,7 @@
 package com.denovo.p8583server.handlers.jsonmodel;
 
+import java.util.Date;
+
 /**
  * Created by Administrator on 2015/1/28.
  */
@@ -11,7 +13,7 @@ public class HistoryMoneyOrderInfoResultBody {
     private String mobileNum;//手机号码
     private String cardNum;//会员卡号
     private String transactionTime;//交易时间
-    private String transactionAmount;//交易金额
+    private double transactionAmount;//交易金额
     private String flowType;//交易类型
     private String channelType;//渠道类型
     private String merchantName;//交易商户
@@ -46,7 +48,7 @@ public class HistoryMoneyOrderInfoResultBody {
         this.flowType = flowType;
     }
 
-    public void setTransactionAmount(String transactionAmount) {
+    public void setTransactionAmount(double transactionAmount) {
         this.transactionAmount = transactionAmount;
     }
 
@@ -99,7 +101,7 @@ public class HistoryMoneyOrderInfoResultBody {
         return transactionTime;
     }
 
-    public String getTransactionAmount() {
+    public double getTransactionAmount() {
         return transactionAmount;
     }
 
