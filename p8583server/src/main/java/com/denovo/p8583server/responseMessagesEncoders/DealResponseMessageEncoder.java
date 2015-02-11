@@ -24,32 +24,33 @@ public class DealResponseMessageEncoder  extends DefaultResponseMessageParser{
     @Override
     public void update(ResponseMessage message, P8583Pack pack) throws Exception {
         DealResponseMessage msg = (DealResponseMessage) message;
-         int[] nums= msg.getPoss();
-        for(int n : nums){
-            if(msg.getP8583Fields().get(n-1).getHasValue()){
-                pack.setString(n,msg.getP8583Fields().get(n-1).getString());
-            }
-        }
+
         if(msg.getResult()!=0) {
             pack.setString(47, msg.getResultMsg());
             super.update(message, pack);
         }else {
             if(msg.getIsQuery()){
-                pack.setString(47, msg.getMac());
                 if(msg.getCodeText()!=null) {
-                   // pack.setString(48,msg.getCodeText());
-                    pack.setString(48,"f72a8fa7-0118-43e6-b1ec-88bced649633");
+                   String codeText= msg.getCodeText();
+                    pack.setString(48,codeText);
+                }else {
+                    pack.setString(47, msg.getMac());
+                    pack.setString(54,msg.getData());
+                    pack.setString(62, msg.SetAccount(msg.GetTheCode(msg.getOpenCode()), msg.getAmount().doubleValue(), 0, msg.getPoint()));
                 }
-               pack.setString(54,msg.getData());
-                pack.setString(62, msg.SetAccount(msg.GetTheCode(msg.getOpenCode()), msg.getAmount().doubleValue(), 0, msg.getPoint()));
             }else {
+                int[] nums= msg.getPoss();
+                for(int n : nums){
+                    if(msg.getP8583Fields().get(n-1).getHasValue()){
+                        pack.setString(n,msg.getP8583Fields().get(n-1).getString());
+                    }
+                }
                 pack.setString(62,msg.SetAccount(msg.GetTheCode(msg.getOpenCode()), 0, 0, 0));
                 pack.setString(47, msg.getSerialNo());
 
             }
             pack.setString(12, new SimpleDateFormat("HHmmss").format(new Date()));
             pack.setString(13, new SimpleDateFormat("MMdd").format(new Date()));
-            pack.setString(32, "00");
             pack.setString(44, "0001");
             pack.setMessageType("0210");
             super.update(message, pack);

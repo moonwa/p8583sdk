@@ -62,10 +62,8 @@ public  class JsonHelper {
         model.setBusinessCode(requestMsg.getClientId().replace(" ", ""));//商户号
         model.setTerminalCode(requestMsg.getTerminalId());//终端号
         model.setMacAddress(requestMsg.getPosAddress());
-
         JSONObject obj = JSONObject.fromObject(model);
         String phoneNumRegStr = obj.toString();
-
         MessageDigest md5 =  MessageDigest.getInstance("md5");
         String entryptParams = Hex.encodeHexString(md5.digest((phoneNumRegStr + requestMsg.getMac()).getBytes("utf8")));
         String resp = ser.execute("posTerminalRegister", "1.0", phoneNumRegStr, entryptParams);
@@ -150,8 +148,8 @@ public  class JsonHelper {
                     if (index !=0 ) {
                         str += ",";
                     }
-                    String strs[] =  body.getTransactionTime().replaceAll(" ", "-").split("-");
-                    str +=  String.format("%1$s|%2$s|%3$s", body.getTransactionNum(), StringUtils.leftPad((Integer.toString((int) Math.abs(body.getTransactionAmount() * 100))),12, '0'),strs[1]+strs[2]);
+                    String strs[] =  body.getTransactionTime().replace(" ", "-").split("-");
+                    str +=  String.format("%1$s|%2$s|%3$s", body.getTransactionNum(), StringUtils.leftPad(Integer.toString((int)(Math.abs(body.getTransactionAmount() * 100))),12, '0'),strs[1]+strs[2]);
                     index++;
                 }
                 result.setMsg(str);
@@ -172,7 +170,7 @@ public  class JsonHelper {
         IMemberWebService ser = new IMemberWebServiceService().getIMemberWebServicePort();
         MessageDigest md5 =  MessageDigest.getInstance("md5");
         RefundEntry model=new RefundEntry();
-        String[] serialNos=  request.getSerialNo().split("|");
+        String[] serialNos=  request.getSerialNo().split("\\|");
         model.setFlowCode(serialNos[1]);
         model.setTerminalFlowNum(serialNos[0]);
         model.setOperator(request.getOperator());

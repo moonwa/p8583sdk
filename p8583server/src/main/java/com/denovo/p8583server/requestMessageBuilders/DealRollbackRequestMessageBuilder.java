@@ -26,6 +26,9 @@ public class DealRollbackRequestMessageBuilder extends DefaultRequestMessagePack
         request.setMac(getMac(p8583Pack));
         request.setOperator(getOperator(p8583Pack));
         request.setDealamount(getDealamount(p8583Pack));
+        request.setP8583Pack(p8583Pack.p8583Fields);
+        request.setData(p8583Pack.data);
+        request.setBatchNo(getBatchNo(p8583Pack));
         return request;
     }
     private Double getDealamount(P8583Pack p8583Pack) throws Exception {

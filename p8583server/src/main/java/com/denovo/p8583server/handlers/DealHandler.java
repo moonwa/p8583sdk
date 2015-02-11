@@ -35,16 +35,16 @@ public class  DealHandler implements MessageHandler {
        }
        double amount= requestMessage.getDealamount();
         if(requestMessage.getDealType().startsWith("31")){ // 查询
-            int[] poss={2, 3, 4, 5,11, 12, 13, 14, 25, 32, 39, 41, 42, 44, 47,49, 53, 54, 60, 61, 62, 63,64};
+            int[] poss={2, 3, 4, 5,11, 12, 13, 14, 25,  39, 41, 42, 44, 47,49, 53, 54, 60, 61, 62, 63,64};
             msg.GetResponse(poss,requestMessage.getP8583Pack());
         }else  if(requestMessage.getDealType().startsWith("00")){ // 交易
             if (dealType.equals("") ||dealType.substring(0, 2).equals("22")) {
-               int[]poss={2, 3,4, 11, 12, 13, 14, 25, 32, 38, 39, 41, 42, 44, 47,49, 52,53, 54,58,59, 60, 61, 62,63, 64};
+               int[]poss={2, 3,4, 11, 12, 13, 14, 25,  38, 39, 41, 42, 44, 47,49, 52,53, 54,58, 60, 61, 63, 64};//59
                 msg.GetResponse(poss,requestMessage.getP8583Pack());
             }
             else if (dealType.substring(0, 2).equals("20")) {
 
-                int[] poss={2, 3, 11, 12, 13, 14, 25, 32, 38, 39, 41, 42, 44, 47,49, 53, 54, 60, 61, 62, 64};
+                int[] poss={2, 3, 11, 12, 13, 14, 25, 38, 39, 41, 42, 44, 47,49, 53, 54, 60, 61, 62, 64};
                 msg.GetResponse(poss,requestMessage.getP8583Pack());
             }
             if(amount<=0){
@@ -52,7 +52,7 @@ public class  DealHandler implements MessageHandler {
             }
         }else if(requestMessage.getDealType().startsWith("20")){
             if (dealType.substring(0, 2).equals("23")) {
-                int[] poss={2, 3, 11, 12, 13, 14, 25, 32, 38, 39, 41, 42, 44, 47,49, 53, 54, 58,59,60, 61, 62, 64};
+                int[] poss={2, 3, 11, 12, 13, 14, 25,  38, 39, 41, 42, 44, 47,49, 53, 54, 58,60, 61, 62, 64};
                 msg.GetResponse(poss,requestMessage.getP8583Pack());
             }
             if (dealType.substring(0, 2).equals("21")) {
