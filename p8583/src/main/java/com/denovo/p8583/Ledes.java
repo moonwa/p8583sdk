@@ -133,19 +133,12 @@ public class Ledes {
     }
 
     public static String MACEncrypt(byte[] buffer, String Key, int idx){
-
-
-
         try {
         byte[] macBuffer = Arrays.copyOfRange(buffer,11 + idx, buffer.length);
-           // macBuffer=new byte[]{2,0,48,32,4,(byte)192,32,(byte)194,(byte)152,55,0,0,0,0,0,0,0,37,0,0,23,84,5,16,0,18,8,16,(byte)128,0,6,80,48,48,48,48,48,54,49,56,48,48,48,48,54,32,32,32,32,32,32,32,32,32,0,50,97,56,97,102,101,100,101,97,98,52,101,52,56,55,52,102,98,102,52,54,100,48,99,100,56,57,55,102,51,57,56,57,49,53,54,(byte)176,(byte)150,113,3,95,30,(byte)199,(byte)150,32,0,0,0,0,0,0,0,0,54,56,48,48,48,48,54,80,48,48,48,48,48,54,49,48,48,50,50,50,54,48,48,49,55,53,53,48,50,48,52,49,54,53,51,52,56,0,8,34,0,34,38,0,56,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,79,78,76,89,83,65,76,69,0,35,32,32,32,104,105,50,54,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32};
         int index = 0;
         //取前两个需要异或的Block
         byte[] temp_block = new byte[8];
         byte[] sub_Mac = GetSubMac(macBuffer, index++ * 8);
-
-
-
         while (sub_Mac != null)
         {
             for (int i = 0; i < 8; i++)
@@ -153,7 +146,6 @@ public class Ledes {
                 //每8个字节异或
                 temp_block[i] = (byte)(sub_Mac[i] ^ temp_block[i]);
             }
-
             //获取下一个需要异或的8字节
             //GetSubMac方法有具体的描述
             sub_Mac = GetSubMac(macBuffer, index++ * 8);
@@ -166,13 +158,8 @@ public class Ledes {
             //将temp_block[i]中的值由10进制转化为16进制，如果不足2位左补0
             result_block+=StringUtils.leftPad(Integer.toHexString(temp_block[i]), Integer.SIZE / 4, '0').substring((Integer.SIZE - Byte.SIZE) / 4, Integer.SIZE / 4);
         }
-
-
-
-
         //转换为大写 关键
             result_block=result_block.toUpperCase();
-
         //-------------------------------------------------------------------------------------------------------------------------
                 /*文档中的描述
                  *  d)  取前8 个字节用MAK加密：
@@ -194,7 +181,6 @@ public class Ledes {
                  */
         //首先取后8个字节的内容 temp_block.Length / 2
         result_block = "";
-
         for (int i = temp_block.length / 2; i < temp_block.length; i++)
         {
 
@@ -209,7 +195,6 @@ public class Ledes {
         {
             temp_block[i] = (byte)(enc_block[i] ^ temp_block[i]);
         }
-
         //-------------------------------------------------------------------------------------------------------------------------
                 /* 文档中的描述
                  f)  用异或的结果TEMP BLOCK 再进行一次单倍长密钥算法运算。
@@ -247,14 +232,12 @@ public class Ledes {
           ret+= StringUtils.leftPad(Integer.toHexString(temp_block[i]), Integer.SIZE / 4, '0').substring((Integer.SIZE - Byte.SIZE)  / 4, Integer.SIZE / 4);
         }
         return ret;
-    }
-    catch (Exception ex)
+         }
+         catch (Exception ex)
         {
 
         }
     return "";
-
-
     }
 
 
