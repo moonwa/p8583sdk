@@ -18,7 +18,6 @@ public class DealResponseMessage extends DefaultResponseMessage{
     private ArrayList<P8583Field> p8583Fields;
     private  String mac;
     private String data;
-
     public void setData(String data) {
         this.data = data;
     }
@@ -108,13 +107,7 @@ public class DealResponseMessage extends DefaultResponseMessage{
         this.openCode = openCode;
     }
 
-    public   String GetPassword(String cardNumber,String passWork,String key1){
-        int len = cardNumber.length();
-        return null;
-    }
-
-    public   String GetPassword1(String cardNumber,String passWork,String key1)throws Exception {
-        String value1 = "000000000000";
+    public   String GetPassword1(String passWork,String key1)throws Exception {
         if (passWork==null||passWork.equals(""))
             return "";
         byte[] d = Ledes.DesDecryptB(passWork, key1);

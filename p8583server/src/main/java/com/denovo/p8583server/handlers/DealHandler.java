@@ -12,6 +12,7 @@ import com.denovo.p8583server.requestMessages.DealRequestMessage;
 import com.denovo.p8583server.responseMessages.DealResponseMessage;
 import org.apache.commons.lang3.StringUtils;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 
 /**
@@ -39,7 +40,7 @@ public class  DealHandler implements MessageHandler {
             msg.GetResponse(poss,requestMessage.getP8583Pack());
         }else  if(requestMessage.getDealType().startsWith("00")){ // 交易
             if (dealType.equals("") ||dealType.substring(0, 2).equals("22")) {
-               int[]poss={2, 3,4, 11, 12, 13, 14, 25,  38, 39, 41, 42, 44, 47,49, 52,53, 54,58, 60, 61, 63, 64};//59
+               int[]poss={2, 3,4, 11, 12, 13, 14, 25};//59
                 msg.GetResponse(poss,requestMessage.getP8583Pack());
             }
             else if (dealType.substring(0, 2).equals("20")) {
@@ -78,8 +79,7 @@ public class  DealHandler implements MessageHandler {
       String openCode=requestMessage.getOpenCode();
         if(openCode!=null) {
             msg.setOpenCode(openCode);
-            String  cardNumber=requestMessage.getCardNumber();
-            requestMessage.setCardOrPhoneNumberPassWork(msg.GetPassword1(cardNumber, requestMessage.getCardOrPhoneNumberPassWork(),key.getKey1()));
+            requestMessage.setCardOrPhoneNumberPassWork(msg.GetPassword1(requestMessage.getCardOrPhoneNumberPassWork(),key.getKey1()));
             if (openCode.equals("000000000000000000000000000000REGIST"))//会员注册
             {
                 msg.setIsQuery(true);
@@ -149,8 +149,9 @@ public class  DealHandler implements MessageHandler {
                     double basicBalance = new BigDecimal(memberBalanceResult.getResult().getBasicBalance()).doubleValue();
                     double integral = new BigDecimal(memberBalanceResult.getResult().getIntegral()).doubleValue();
                     double donateBalance = new BigDecimal(memberBalanceResult.getResult().getDonateBalance()).doubleValue();
-                    msg.setAmount(msg.add(basicBalance, donateBalance));
-                    msg.setData("0210156C" + StringUtils.leftPad((msg.add(basicBalance, donateBalance).multiply(new BigDecimal(100))).toString(), 12, '0'));
+                    String amont=new DecimalFormat("0.00").format(msg.add(basicBalance, donateBalance));
+                    msg.setAmount(new BigDecimal(amont));
+                    msg.setData("0210156C" + StringUtils.leftPad(amont.replace(".",""), 12, '0'));
                     msg.setMac(requestMessage.getMac());
                     msg.setPoint(integral);
                 }
