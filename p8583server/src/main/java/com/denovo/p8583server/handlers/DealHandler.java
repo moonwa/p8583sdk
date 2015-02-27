@@ -40,7 +40,7 @@ public class  DealHandler implements MessageHandler {
             msg.GetResponse(poss,requestMessage.getP8583Pack());
         }else  if(requestMessage.getDealType().startsWith("00")){ // 交易
             if (dealType.equals("") ||dealType.substring(0, 2).equals("22")) {
-               int[]poss={2, 3,4, 11, 12, 13, 14, 25};//59
+               int[]poss={2, 3,4, 11, 12, 13, 14, 25,  63};//59
                 msg.GetResponse(poss,requestMessage.getP8583Pack());
             }
             else if (dealType.substring(0, 2).equals("20")) {
