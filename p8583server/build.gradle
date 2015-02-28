@@ -10,6 +10,13 @@ mainClassName = "com.denovo.p8583server.App"
 jar {
     baseName = 'p8583server'
     version =  '0.1.0'
+	manifest {
+		attributes(
+			"Implementation-Title": "Gradle",
+			"Implementation-Version": version,
+			"Main-Class": mainClassName
+			)
+	}
 }
 repositories {
     mavenCentral()
