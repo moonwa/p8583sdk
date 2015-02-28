@@ -38,7 +38,7 @@ public class  DealHandler implements MessageHandler {
         if(requestMessage.getDealType().startsWith("31")){ // 查询
             int[] poss={2, 3, 4, 5,11, 12, 13, 14, 25,  39, 41, 42, 44, 47,49, 53, 54, 60, 61, 62, 63,64};
             msg.GetResponse(poss,requestMessage.getP8583Pack());
-        }else  if(requestMessage.getDealType().startsWith("00")){ // 交易
+            }else  if(requestMessage.getDealType().startsWith("00")){ // 交易
             if (dealType.equals("") ||dealType.substring(0, 2).equals("22")) {
                int[]poss={2, 3,4, 11, 12, 13, 14, 25,  63};//59
                 msg.GetResponse(poss,requestMessage.getP8583Pack());

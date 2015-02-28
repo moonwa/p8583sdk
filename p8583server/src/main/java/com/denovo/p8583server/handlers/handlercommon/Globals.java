@@ -1,9 +1,10 @@
 package com.denovo.p8583server.handlers.handlercommon;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
 
 /**
  * Created by Administrator on 2015/1/30.
@@ -61,8 +62,10 @@ public class Globals {
         return flag;
 
     }
-
-
-
-
+    public static int GetPortOrIp(String key) throws IOException {
+        InputStream in = new BufferedInputStream(new FileInputStream("config"));
+        Properties p = new Properties();
+        p.load(in);
+        return Integer.parseInt( p.getProperty(key));
+    }
 }

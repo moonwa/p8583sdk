@@ -119,11 +119,13 @@ public class DealResponseMessage extends DefaultResponseMessage{
     }
     public  String DecimalToIntLeft(BigDecimal v, int width)
     {
+        v.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
         return StringUtils.leftPad(v.toString().replace(".", ""), width, '0');
     }
     public  BigDecimal mul(double d1, double d2)
     {        // 进行乘法运算
-        BigDecimal b1 = new BigDecimal(d1);
+        BigDecimal b1 = new BigDecimal(String.valueOf(d1));
+
         BigDecimal b2 = new BigDecimal(d2);
         return new BigDecimal(b1.multiply(b2).doubleValue());
     }
