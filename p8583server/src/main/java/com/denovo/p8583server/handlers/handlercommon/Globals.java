@@ -62,10 +62,17 @@ public class Globals {
         return flag;
 
     }
-    public static int GetPortOrIp(String key) throws IOException {
+    public static final String aaa = GetPortOrIp("webServiceIp");
+
+    public static final String GetPortOrIp(String key){
+        try {
         InputStream in = new BufferedInputStream(new FileInputStream("config"));
         Properties p = new Properties();
         p.load(in);
-        return Integer.parseInt( p.getProperty(key));
+            return  p.getProperty(key);
+        }catch (Exception ex){
+            return "";
+        }
+
     }
 }

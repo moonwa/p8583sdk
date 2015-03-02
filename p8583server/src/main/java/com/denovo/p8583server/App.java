@@ -63,7 +63,7 @@ public class App{
         acceptor.getSessionConfig().setReadBufferSize(4096);
         acceptor.getSessionConfig().setIdleTime( IdleStatus.BOTH_IDLE, 1 );
         try {
-            acceptor.bind(new InetSocketAddress(Globals.GetPortOrIp("port")));
+            acceptor.bind(new InetSocketAddress(Integer.parseInt(Globals.GetPortOrIp("port"))));
             System.out.println("started.");
             System.in.read();
             System.out.println("stoped.");
