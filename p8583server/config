@@ -1,0 +1,2 @@
+port=3130
+webServiceIp=http://58.62.144.227:19012/crm/ws/crmMemberWebService?wsdl
