@@ -79,6 +79,7 @@ public class  DealHandler implements MessageHandler {
       String openCode=requestMessage.getOpenCode();
         if(openCode!=null) {
             msg.setOpenCode(openCode);
+            try{
             requestMessage.setCardOrPhoneNumberPassWork(msg.GetPassword1(requestMessage.getCardOrPhoneNumberPassWork(),key.getKey1()));
             if (openCode.equals("000000000000000000000000000000REGIST"))//会员注册
             {
@@ -159,6 +160,12 @@ public class  DealHandler implements MessageHandler {
                     msg.setResultMsg(memberBalanceResult.getErrorCode()+":"+memberBalanceResult.getMsg());
                     msg.setResult(0x88);
                 }
+            }
+            }catch (Exception ex) {
+
+                msg.setResultMsg("异常:"+ex.getMessage());
+                msg.setResult(0x88);
+
             }
 
         }

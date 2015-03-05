@@ -22,6 +22,7 @@ public class PosRegisteredRequestMessageBuilder extends DefaultRequestMessagePac
         request.setSerialNo(getSerialNo(p8583Pack));
         request.setBatchNo(getBatchNo(p8583Pack));
         request.setPosAddress(setPosAddress(p8583Pack));
+        request.setMac(getMac(p8583Pack));
         return request;
     }
 
@@ -34,5 +35,12 @@ public class PosRegisteredRequestMessageBuilder extends DefaultRequestMessagePac
             //return text.substring(3, 20).trim();
         }
         return null;
+    }
+    private String getMac(P8583Pack p8583Pack) throws Exception {
+        if (p8583Pack.getHasValue(47)){
+            return p8583Pack.getString(47);
+        }
+        return null;
+
     }
 }

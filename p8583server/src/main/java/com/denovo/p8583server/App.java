@@ -7,6 +7,8 @@ import com.denovo.p8583server.handlerbuilders.*;
 import com.denovo.p8583server.handlers.handlercommon.Globals;
 import com.denovo.p8583server.requestMessageBuilders.*;
 import com.denovo.p8583server.responseMessagesEncoders.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.mina.core.service.IoAcceptor;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
@@ -18,12 +20,11 @@ import java.net.InetSocketAddress;
 
 
 public class App{
+    private static final Log log = LogFactory.getLog(App.class);
     public static void main(String[] args) throws Exception {
 
+        log.debug("Reading config");
 
-        System.out.println("started.");
-        System.out.println("started.");
-        System.out.println("started.");
         IoAcceptor acceptor = new NioSocketAcceptor();
         acceptor.getFilterChain().addLast( "logger", new LoggingFilter() );
 

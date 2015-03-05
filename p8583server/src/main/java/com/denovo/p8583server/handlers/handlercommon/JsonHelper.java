@@ -1,16 +1,10 @@
 package com.denovo.p8583server.handlers.handlercommon;
 
 import com.denovo.p8583server.handlers.jsonmodel.*;
-import com.denovo.p8583server.memweb.IMemberWebService;
-import com.denovo.p8583server.memweb.IMemberWebServiceService;
 import com.denovo.p8583server.requestMessages.*;
-
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.StringUtils;
-
-import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -22,24 +16,6 @@ public  class JsonHelper {
 
     //签到
     public static Result GetSignInResult(SignInRequestMessage requestMessage) throws Exception {
-    IMemberWebService ser = new IMemberWebServiceService().getIMemberWebServicePort();
-    SignInEntry model = new SignInEntry();
-    model.setBusinessCode(requestMessage.getClientId().replace("F",""));
-    model.setAccountName(requestMessage.getUserName());
-    model.setTerminalCode(requestMessage.getTerminalId());
-    MessageDigest md5 = MessageDigest.getInstance("md5");
-    model.setPasswd(Hex.encodeHexString(md5.digest(requestMessage.getPassword().getBytes("utf8"))));
-    JSONObject obj = JSONObject.fromObject(model);
-    String phoneNumRegStr = obj.toString();
-    String entryptParams = Hex.encodeHexString(md5.digest((phoneNumRegStr + requestMessage.getMac()).getBytes("utf8")));
-    String resp = ser.execute("posAccountLogin", "1.0", phoneNumRegStr, entryptParams);
-    obj=JSONObject.fromObject(resp);
-   return (Result) JSONObject.toBean(obj, Result.class);
-   }
-
-    //签退
-    public static Result GetSignInOutResult(SignInOutRequestMessage requestMessage) throws Exception {
-        IMemberWebService ser = new IMemberWebServiceService().getIMemberWebServicePort();
         SignInEntry model = new SignInEntry();
         model.setBusinessCode(requestMessage.getClientId().replace("F",""));
         model.setAccountName(requestMessage.getUserName());
@@ -49,7 +25,24 @@ public  class JsonHelper {
         JSONObject obj = JSONObject.fromObject(model);
         String phoneNumRegStr = obj.toString();
         String entryptParams = Hex.encodeHexString(md5.digest((phoneNumRegStr + requestMessage.getMac()).getBytes("utf8")));
-        String resp = ser.execute("posAccountLogOut", "1.0", phoneNumRegStr, entryptParams);
+        String resp = Globals.GetMemberWebService().execute("posAccountLogin", "1.0", phoneNumRegStr, entryptParams);
+        obj=JSONObject.fromObject(resp);
+        return (Result) JSONObject.toBean(obj, Result.class);
+
+    }
+
+    //签退
+    public static Result GetSignInOutResult(SignInOutRequestMessage requestMessage) throws Exception {
+        SignInEntry model = new SignInEntry();
+        model.setBusinessCode(requestMessage.getClientId().replace("F",""));
+        model.setAccountName(requestMessage.getUserName());
+        model.setTerminalCode(requestMessage.getTerminalId());
+        MessageDigest md5 = MessageDigest.getInstance("md5");
+        model.setPasswd(Hex.encodeHexString(md5.digest(requestMessage.getPassword().getBytes("utf8"))));
+        JSONObject obj = JSONObject.fromObject(model);
+        String phoneNumRegStr = obj.toString();
+        String entryptParams = Hex.encodeHexString(md5.digest((phoneNumRegStr + requestMessage.getMac()).getBytes("utf8")));
+        String resp = Globals.GetMemberWebService().execute("posAccountLogOut", "1.0", phoneNumRegStr, entryptParams);
         obj=JSONObject.fromObject(resp);
         return (Result) JSONObject.toBean(obj, Result.class);
     }
@@ -57,7 +50,6 @@ public  class JsonHelper {
 
     //终端注册
     public static Result  GetPosRegisteredResult(PosRegisteredRequestMessage requestMsg) throws Exception{
-        IMemberWebService ser = new IMemberWebServiceService().getIMemberWebServicePort();
         PosRegisteredEntry model = new PosRegisteredEntry();
         model.setBusinessCode(requestMsg.getClientId().replace(" ", ""));//商户号
         model.setTerminalCode(requestMsg.getTerminalId());//终端号
@@ -66,13 +58,12 @@ public  class JsonHelper {
         String phoneNumRegStr = obj.toString();
         MessageDigest md5 =  MessageDigest.getInstance("md5");
         String entryptParams = Hex.encodeHexString(md5.digest((phoneNumRegStr + requestMsg.getMac()).getBytes("utf8")));
-        String resp = ser.execute("posTerminalRegister", "1.0", phoneNumRegStr, entryptParams);
+        String resp = Globals.GetMemberWebService().execute("posTerminalRegister", "1.0", phoneNumRegStr, entryptParams);
         obj = JSONObject.fromObject(resp);
-       return  (Result) JSONObject.toBean(obj, Result.class);
+        return  (Result) JSONObject.toBean(obj, Result.class);
     }
     //会员扣款
     public  static  ConsumeResult GetConsumeResult(DealRequestMessage request) throws Exception{
-        IMemberWebService ser = new IMemberWebServiceService().getIMemberWebServicePort();
         MessageDigest md5 =  MessageDigest.getInstance("md5");
         ConsumeEntry model = new ConsumeEntry();
         model.setTerminalFlowNum(request.getSerialNo());
@@ -87,13 +78,12 @@ public  class JsonHelper {
         JSONObject obj = JSONObject.fromObject(model);
         String strJson = obj.toString();
         String entryptParams = Hex.encodeHexString(md5.digest((strJson + request.getMac()).getBytes("utf8")));
-        String resp = ser.execute("consume", "1.0", strJson, entryptParams);
+        String resp =  Globals.GetMemberWebService().execute("consume", "1.0", strJson, entryptParams);
         obj = JSONObject.fromObject(resp);
         return  (ConsumeResult) JSONObject.toBean(obj, ConsumeResult.class);
     }
     //查询余额和积分
     public static   MemberBalanceResult  GetMemberBalanceResult(DealRequestMessage requestMessage) throws Exception{
-        IMemberWebService ser = new IMemberWebServiceService().getIMemberWebServicePort();
         MemberSelectBalancEntry model=new MemberSelectBalancEntry();
         model.setLoginNum(requestMessage.getCardNumber());
         model.setBusinessCode(requestMessage.getClientId().replace("F", ""));
@@ -103,13 +93,12 @@ public  class JsonHelper {
         JSONObject obj = JSONObject.fromObject(model);
         String strJson = obj.toString();
         String entryptParams = Hex.encodeHexString(md5.digest((strJson + requestMessage.getMac()).getBytes("utf8")));
-        String resp = ser.execute("getMemberBalance", "1.0", strJson, entryptParams);
+        String resp =  Globals.GetMemberWebService().execute("getMemberBalance", "1.0", strJson, entryptParams);
         obj = JSONObject.fromObject(resp);
         return  (MemberBalanceResult) JSONObject.toBean(obj, MemberBalanceResult.class);
     }
     //退款时 先 返回交易历史记录
     public static Result GetHistoryMoneyOrderInfoResult(DealRequestMessage request) throws Exception {
-        IMemberWebService ser = new IMemberWebServiceService().getIMemberWebServicePort();
         MessageDigest md5 =  MessageDigest.getInstance("md5");
         HistoryMoneyOrderInfoEntry model=new HistoryMoneyOrderInfoEntry();
        model.setLoginNum(request.getCardNumber());
@@ -126,7 +115,7 @@ public  class JsonHelper {
         String entryptParams = Hex.encodeHexString(md5.digest((strJson + request.getMac()).getBytes("utf8")));
         Result result=new Result();
         try {
-            String resp = ser.execute("getHistoryMoneyOrderInfo", "1.0", strJson, entryptParams);
+            String resp =  Globals.GetMemberWebService().execute("getHistoryMoneyOrderInfo", "1.0", strJson, entryptParams);
             obj = JSONObject.fromObject(resp);
             Map<String,Class<?>> map  = new HashMap<String,Class<?>>();
             map.put("code",String.class);
@@ -167,7 +156,6 @@ public  class JsonHelper {
 
     //退款
     public   static  ConsumeResult  GetRefundResult(DealRequestMessage request) throws Exception {
-        IMemberWebService ser = new IMemberWebServiceService().getIMemberWebServicePort();
         MessageDigest md5 =  MessageDigest.getInstance("md5");
         RefundEntry model=new RefundEntry();
         String[] serialNos=  request.getSerialNo().split("\\|");
@@ -182,7 +170,7 @@ public  class JsonHelper {
         JSONObject obj = JSONObject.fromObject(model);
         String strJson = obj.toString();
         String entryptParams = Hex.encodeHexString(md5.digest((strJson + request.getMac()).getBytes("utf8")));
-        String resp = ser.execute("refund", "1.0", strJson, entryptParams);
+        String resp =  Globals.GetMemberWebService().execute("refund", "1.0", strJson, entryptParams);
         obj = JSONObject.fromObject(resp);
         return  (ConsumeResult) JSONObject.toBean(obj, ConsumeResult.class);
 
@@ -190,7 +178,6 @@ public  class JsonHelper {
 
     //会员注册
     public   static  Result  GetPhoneAndCardNumRegResult(DealRequestMessage request) throws Exception {
-        IMemberWebService ser = new IMemberWebServiceService().getIMemberWebServicePort();
         MessageDigest md5 =  MessageDigest.getInstance("md5");
         phoneAndCardNumRegEntry model=new phoneAndCardNumRegEntry();
 
@@ -207,7 +194,7 @@ public  class JsonHelper {
         JSONObject obj = JSONObject.fromObject(model);
         String strJson = obj.toString();
         String entryptParams = Hex.encodeHexString(md5.digest((strJson + request.getMac()).getBytes("utf8")));
-        String resp = ser.execute("phoneAndCardNumReg", "1.0", strJson, entryptParams);
+        String resp =  Globals.GetMemberWebService().execute("phoneAndCardNumReg", "1.0", strJson, entryptParams);
         obj = JSONObject.fromObject(resp);
         return  (Result) JSONObject.toBean(obj, Result.class);
 
@@ -215,7 +202,6 @@ public  class JsonHelper {
 
     //充值
     public   static  HistoryMoneyOrderInfoResult  GetRechargeResult(DealRequestMessage request) throws Exception {
-        IMemberWebService ser = new IMemberWebServiceService().getIMemberWebServicePort();
         MessageDigest md5 =  MessageDigest.getInstance("md5");
         ChargeEntry model=new ChargeEntry();
 
@@ -232,7 +218,7 @@ public  class JsonHelper {
         JSONObject obj = JSONObject.fromObject(model);
         String strJson = obj.toString();
         String entryptParams = Hex.encodeHexString(md5.digest((strJson + request.getMac()).getBytes("utf8")));
-        String resp = ser.execute("charge", "1.0", strJson, entryptParams);
+        String resp =  Globals.GetMemberWebService().execute("charge", "1.0", strJson, entryptParams);
         obj = JSONObject.fromObject(resp);
 
         return  (HistoryMoneyOrderInfoResult) JSONObject.toBean(obj, HistoryMoneyOrderInfoResult.class);
@@ -240,7 +226,6 @@ public  class JsonHelper {
     }
     //交易冲销   冲正
      public   static  Result  GetRoolbackResult(DealRollbackRequestMessage request) throws Exception {
-        IMemberWebService ser = new IMemberWebServiceService().getIMemberWebServicePort();
         MessageDigest md5 =  MessageDigest.getInstance("md5");
          OffsetEmpty model=new OffsetEmpty();
         model.setOperator(request.getOperator());
@@ -251,7 +236,7 @@ public  class JsonHelper {
         JSONObject obj = JSONObject.fromObject(model);
         String strJson = obj.toString();
         String entryptParams = Hex.encodeHexString(md5.digest((strJson + request.getMac()).getBytes("utf8")));
-        String resp = ser.execute("offset", "1.0", strJson, entryptParams);
+        String resp =  Globals.GetMemberWebService().execute("offset", "1.0", strJson, entryptParams);
         obj = JSONObject.fromObject(resp);
         return  (Result) JSONObject.toBean(obj, Result.class);
     }
