@@ -48,11 +48,11 @@ public class App{
 
         // handler builders
         HandlerBuilders handlerBuilders = new HandlerBuilders();
-        handlerBuilders.register("0800", new SigninHandlerBuilder());//签到
-        handlerBuilders.register("0900",new PosRegisteredHandlerBuilder());//pos机注册
-        handlerBuilders.register("0200",new DealHandlerBuilder());//交易
-        handlerBuilders.register("0400",new DealRollbackHandlerBuilder());//冲正
-        handlerBuilders.register("0820",new SignInOutHandlerBuilder());// 0820  签退
+        handlerBuilders.register("0800", new SigninHandlerBuilder());
+        handlerBuilders.register("0900",new PosRegisteredHandlerBuilder());
+        handlerBuilders.register("0200",new DealHandlerBuilder());
+        handlerBuilders.register("0400",new DealRollbackHandlerBuilder());
+        handlerBuilders.register("0820",new SignInOutHandlerBuilder());
 
         acceptor.setHandler(new P8583AccepterHandler(handlerBuilders) );
 

@@ -35,10 +35,10 @@ public class  DealHandler implements MessageHandler {
            dealType= requestMessage.getP8583Pack().get(59).getString();
        }
        double amount= requestMessage.getDealamount();
-        if(requestMessage.getDealType().startsWith("31")){ // 查询
+        if(requestMessage.getDealType().startsWith("31")){
             int[] poss={2, 3, 4, 5,11, 12, 13, 14, 25,  39, 41, 42, 44, 47,49, 53, 54, 60, 61, 62, 63,64};
             msg.GetResponse(poss,requestMessage.getP8583Pack());
-            }else  if(requestMessage.getDealType().startsWith("00")){ // 交易
+            }else  if(requestMessage.getDealType().startsWith("00")){
             if (dealType.equals("") ||dealType.substring(0, 2).equals("22")) {
                int[]poss={2, 3,4, 11, 12, 13, 14, 25,  63};//59
                 msg.GetResponse(poss,requestMessage.getP8583Pack());
@@ -81,7 +81,7 @@ public class  DealHandler implements MessageHandler {
             msg.setOpenCode(openCode);
             try{
             requestMessage.setCardOrPhoneNumberPassWork(msg.GetPassword1(requestMessage.getCardOrPhoneNumberPassWork(),key.getKey1()));
-            if (openCode.equals("000000000000000000000000000000REGIST"))//会员注册
+            if (openCode.equals("000000000000000000000000000000REGIST"))
             {
                 msg.setIsQuery(true);
                 Result phoneAndCardNumRegResult = JsonHelper.GetPhoneAndCardNumRegResult(requestMessage);
@@ -97,7 +97,7 @@ public class  DealHandler implements MessageHandler {
                 }
 
 
-            } else if (openCode.equals("000000000000000000000000000000DETAIL")){//获取交易记录
+            } else if (openCode.equals("000000000000000000000000000000DETAIL")){
                  Result  result=JsonHelper.GetHistoryMoneyOrderInfoResult(requestMessage);
                 msg.setIsQuery(true);
                 if (result.getCode().equals("0")) {
@@ -111,8 +111,8 @@ public class  DealHandler implements MessageHandler {
                     msg.setResultMsg(result.getErrorCode()+":"+result.getMsg());
                     msg.setResult(0x88);
                 }
-            }else if(openCode.equals("000000000000000000000000000000REFUND")) {//退款
-                //退款  执行退款 返回的结果跟扣款一样 所以共用一个 ConsumeResult
+            }else if(openCode.equals("000000000000000000000000000000REFUND")) {
+
                  ConsumeResult refundResult=JsonHelper.GetRefundResult(requestMessage);
                 if (refundResult.getCode().equals("0")) {
                     msg.setSerialNo( refundResult.getResult().getFlowCode());
@@ -122,7 +122,7 @@ public class  DealHandler implements MessageHandler {
                     msg.setResult(0x88);
                 }
 
-            }else if(openCode.equals("000000000000000000000000000000ONLYSALE")){//会员扣款
+            }else if(openCode.equals("000000000000000000000000000000ONLYSALE")){
                 ConsumeResult consumeResult=JsonHelper.GetConsumeResult(requestMessage);
                 if (consumeResult.getCode().equals("0")) {
                     msg.setSerialNo( consumeResult.getResult().getFlowCode());
@@ -131,7 +131,7 @@ public class  DealHandler implements MessageHandler {
                     msg.setResultMsg(consumeResult.getErrorCode()+":"+consumeResult.getMsg());
                     msg.setResult(0x88);
                 }
-             }else if(openCode.equals("000000000000000000000000000000RECHARGE")) {//充值
+             }else if(openCode.equals("000000000000000000000000000000RECHARGE")) {
                 HistoryMoneyOrderInfoResult rechargeResult = JsonHelper.GetRechargeResult(requestMessage);
                 if (rechargeResult.getCode().equals("0")) {
                     msg.setSerialNo(rechargeResult.getResult().getFlowCode());
@@ -140,9 +140,9 @@ public class  DealHandler implements MessageHandler {
                     msg.setResultMsg(rechargeResult.getErrorCode()+":"+rechargeResult.getMsg());
                     msg.setResult(0x88);
                 }
-            }else  if(openCode.equals("000000000000000000000000000000QUERY")) {//查询
+            }else  if(openCode.equals("000000000000000000000000000000QUERY")) {
 
-                //查询余额跟积分
+
                 MemberBalanceResult memberBalanceResult = JsonHelper.GetMemberBalanceResult(requestMessage);
                 msg.setIsQuery(true);
                 if (memberBalanceResult.getCode().equals("0")) {
@@ -163,7 +163,7 @@ public class  DealHandler implements MessageHandler {
             }
             }catch (Exception ex) {
 
-                msg.setResultMsg("异常:"+ex.getMessage());
+                msg.setResultMsg("Exception:"+ex.getMessage());
                 msg.setResult(0x88);
 
             }

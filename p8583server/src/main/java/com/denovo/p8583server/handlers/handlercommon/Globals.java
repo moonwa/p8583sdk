@@ -70,7 +70,6 @@ public class Globals {
 
     public static final String GetPortOrIp(String key){
         try {
-
             InputStream in = new BufferedInputStream(new FileInputStream("config"));
             Properties p = new Properties();
             p.load(in);

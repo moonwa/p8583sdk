@@ -14,7 +14,7 @@ import java.util.*;
  */
 public  class JsonHelper {
 
-    //签到
+
     public static Result GetSignInResult(SignInRequestMessage requestMessage) throws Exception {
         SignInEntry model = new SignInEntry();
         model.setBusinessCode(requestMessage.getClientId().replace("F",""));
@@ -31,7 +31,7 @@ public  class JsonHelper {
 
     }
 
-    //签退
+
     public static Result GetSignInOutResult(SignInOutRequestMessage requestMessage) throws Exception {
         SignInEntry model = new SignInEntry();
         model.setBusinessCode(requestMessage.getClientId().replace("F",""));
@@ -48,11 +48,11 @@ public  class JsonHelper {
     }
 
 
-    //终端注册
+
     public static Result  GetPosRegisteredResult(PosRegisteredRequestMessage requestMsg) throws Exception{
         PosRegisteredEntry model = new PosRegisteredEntry();
-        model.setBusinessCode(requestMsg.getClientId().replace(" ", ""));//商户号
-        model.setTerminalCode(requestMsg.getTerminalId());//终端号
+        model.setBusinessCode(requestMsg.getClientId().replace(" ", ""));
+        model.setTerminalCode(requestMsg.getTerminalId());
         model.setMacAddress(requestMsg.getPosAddress());
         JSONObject obj = JSONObject.fromObject(model);
         String phoneNumRegStr = obj.toString();
@@ -62,7 +62,7 @@ public  class JsonHelper {
         obj = JSONObject.fromObject(resp);
         return  (Result) JSONObject.toBean(obj, Result.class);
     }
-    //会员扣款
+
     public  static  ConsumeResult GetConsumeResult(DealRequestMessage request) throws Exception{
         MessageDigest md5 =  MessageDigest.getInstance("md5");
         ConsumeEntry model = new ConsumeEntry();
@@ -82,7 +82,7 @@ public  class JsonHelper {
         obj = JSONObject.fromObject(resp);
         return  (ConsumeResult) JSONObject.toBean(obj, ConsumeResult.class);
     }
-    //查询余额和积分
+
     public static   MemberBalanceResult  GetMemberBalanceResult(DealRequestMessage requestMessage) throws Exception{
         MemberSelectBalancEntry model=new MemberSelectBalancEntry();
         model.setLoginNum(requestMessage.getCardNumber());
@@ -97,7 +97,7 @@ public  class JsonHelper {
         obj = JSONObject.fromObject(resp);
         return  (MemberBalanceResult) JSONObject.toBean(obj, MemberBalanceResult.class);
     }
-    //退款时 先 返回交易历史记录
+
     public static Result GetHistoryMoneyOrderInfoResult(DealRequestMessage request) throws Exception {
         MessageDigest md5 =  MessageDigest.getInstance("md5");
         HistoryMoneyOrderInfoEntry model=new HistoryMoneyOrderInfoEntry();
@@ -154,7 +154,7 @@ public  class JsonHelper {
     }
 
 
-    //退款
+
     public   static  ConsumeResult  GetRefundResult(DealRequestMessage request) throws Exception {
         MessageDigest md5 =  MessageDigest.getInstance("md5");
         RefundEntry model=new RefundEntry();
@@ -176,7 +176,7 @@ public  class JsonHelper {
 
     }
 
-    //会员注册
+
     public   static  Result  GetPhoneAndCardNumRegResult(DealRequestMessage request) throws Exception {
         MessageDigest md5 =  MessageDigest.getInstance("md5");
         phoneAndCardNumRegEntry model=new phoneAndCardNumRegEntry();
@@ -200,7 +200,7 @@ public  class JsonHelper {
 
     }
 
-    //充值
+
     public   static  HistoryMoneyOrderInfoResult  GetRechargeResult(DealRequestMessage request) throws Exception {
         MessageDigest md5 =  MessageDigest.getInstance("md5");
         ChargeEntry model=new ChargeEntry();
@@ -224,7 +224,7 @@ public  class JsonHelper {
         return  (HistoryMoneyOrderInfoResult) JSONObject.toBean(obj, HistoryMoneyOrderInfoResult.class);
 
     }
-    //交易冲销   冲正
+
      public   static  Result  GetRoolbackResult(DealRollbackRequestMessage request) throws Exception {
         MessageDigest md5 =  MessageDigest.getInstance("md5");
          OffsetEmpty model=new OffsetEmpty();
