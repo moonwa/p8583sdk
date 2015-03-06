@@ -4,11 +4,11 @@ package com.denovo.p8583server.handlers.jsonmodel;
  * Created by Administrator on 2015/1/22.
  */
 public class PosRegisteredEntry {
-    //必填，pos终端编码
+
     private String terminalCode;
-    //必填,机身码
+
     private String  macAddress;
-    //必填，商户编码
+
     private String businessCode;
 
     public  String getTerminalCode(){

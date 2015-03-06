@@ -6,19 +6,19 @@ import java.util.Date;
  * Created by Administrator on 2015/1/28.
  */
 public class HistoryMoneyOrderInfoResultBody {
-    private String orderNum;//订单编号
-    private String payFlowNum;//支付流水号
-    private String transactionNum;//交易编号
+    private String orderNum;
+    private String payFlowNum;
+    private String transactionNum;
 
-    private String mobileNum;//手机号码
-    private String cardNum;//会员卡号
-    private String transactionTime;//交易时间
-    private double transactionAmount;//交易金额
-    private String flowType;//交易类型
-    private String channelType;//渠道类型
-    private String merchantName;//交易商户
-    private String description;//备注
-    private String operatorName;//操作人
+    private String mobileNum;
+    private String cardNum;
+    private String transactionTime;
+    private double transactionAmount;
+    private String flowType;
+    private String channelType;
+    private String merchantName;
+    private String description;
+    private String operatorName;
 
     public void setOrderNum(String orderNum) {
         this.orderNum = orderNum;
@@ -125,5 +125,5 @@ public class HistoryMoneyOrderInfoResultBody {
         return operatorName;
     }
 
-    private String isCancel;//是否已冲销
+    private String isCancel;
 }

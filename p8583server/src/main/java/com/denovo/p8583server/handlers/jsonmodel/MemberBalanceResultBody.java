@@ -4,9 +4,9 @@ package com.denovo.p8583server.handlers.jsonmodel;
  * Created by Administrator on 2015/1/26.
  */
 public class MemberBalanceResultBody  {
-    private String basicBalance;//基本余额
-    private String donateBalance;//赠送余额
-    private String integral;//积分余额
+    private String basicBalance;
+    private String donateBalance;
+    private String integral;
 
     public void setDonateBalance(String donateBalance) {
         this.donateBalance = donateBalance;

@@ -3,7 +3,7 @@ package com.denovo.p8583server.handlers.jsonmodel;
 /**
  * Created by Administrator on 2015/1/22.
  */
-//会员账户 积分余额查询
+
 public class MemberSelectBalancEntry {
 
     private String loginNum;

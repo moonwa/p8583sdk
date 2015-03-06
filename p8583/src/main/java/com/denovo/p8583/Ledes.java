@@ -76,7 +76,7 @@ public class Ledes {
         return stringBuilder.toString();
     }
     private static byte[] getHAccno(String accno)  {
-        //取出主帐号；
+
         int len = accno.length();
         byte arrTemp[] = accno.getBytes();
         byte arrAccno[] = new byte[12];
@@ -136,95 +136,64 @@ public class Ledes {
         try {
         byte[] macBuffer = Arrays.copyOfRange(buffer,11 + idx, buffer.length);
         int index = 0;
-        //取前两个需要异或的Block
+
         byte[] temp_block = new byte[8];
         byte[] sub_Mac = GetSubMac(macBuffer, index++ * 8);
         while (sub_Mac != null)
         {
             for (int i = 0; i < 8; i++)
             {
-                //每8个字节异或
+
                 temp_block[i] = (byte)(sub_Mac[i] ^ temp_block[i]);
             }
-            //获取下一个需要异或的8字节
-            //GetSubMac方法有具体的描述
+
             sub_Mac = GetSubMac(macBuffer, index++ * 8);
         }
             String result_block = "";
-            //temp_block=new byte[]{(byte)149,(byte)235,(byte)205,(byte)179,55,(byte)180,94,(byte)210};
-        //因为后面暂时只用到了转换后的前8个字节，所以只处理一般长度 temp_block.Length / 2
+
         for (int i = 0; i < temp_block.length / 2; i++)
         {
-            //将temp_block[i]中的值由10进制转化为16进制，如果不足2位左补0
+
             result_block+=StringUtils.leftPad(Integer.toHexString(temp_block[i]), Integer.SIZE / 4, '0').substring((Integer.SIZE - Byte.SIZE) / 4, Integer.SIZE / 4);
         }
-        //转换为大写 关键
+
             result_block=result_block.toUpperCase();
-        //-------------------------------------------------------------------------------------------------------------------------
-                /*文档中的描述
-                 *  d)  取前8 个字节用MAK加密：
-                    ENC BLOCK1 = eMAK（TM311 TM312 TM321 TM322 TM331 TM332 TM341 TM342）
-			                    = EN11 EN12 EN13 EN14 EN15 EN16 EN17 EN18
-                 */
-        //存放加密后的内容
+
+
         byte[] enc_block = new byte[8];
-        //加密 result_block的内容是之前计算好的HEXDECIMAL
+
         enc_block =MacEncrypt(result_block.getBytes("utf-8"), Key.getBytes("utf-8"));
 
-        //-------------------------------------------------------------------------------------------------------------------------
-                /* 文档中的描述
-                    e)  将加密后的结果与后8 个字节异或：
-                        EN11  EN12  EN13  EN14  EN15  EN16  EN17  EN18
-                        XOR）     	TM351 TM352 TM361 TM362 TM371 TM372 TM381 TM382
-                        ------------------------------------------------------------
-                        TEMP BLOCK=	TE11  TE12  TE13  TE14  TE15  TE16  TE17  TE18
-                 */
-        //首先取后8个字节的内容 temp_block.Length / 2
+
         result_block = "";
         for (int i = temp_block.length / 2; i < temp_block.length; i++)
         {
 
             result_block+=StringUtils.leftPad(Integer.toHexString(temp_block[i]), Integer.SIZE / 4, '0').substring((Integer.SIZE - Byte.SIZE) / 4, Integer.SIZE / 4);
         }
-        //转换为大写 关键
+
         result_block = result_block.toUpperCase();
             temp_block = result_block.getBytes("utf-8");
-        //将后8个字节的HEXDECIMAL转化为byte[]
-        //将加密后的结果与后8 个字节异或
+
         for (int i = 0; i < 8; i++)
         {
             temp_block[i] = (byte)(enc_block[i] ^ temp_block[i]);
         }
-        //-------------------------------------------------------------------------------------------------------------------------
-                /* 文档中的描述
-                 f)  用异或的结果TEMP BLOCK 再进行一次单倍长密钥算法运算。
-                        ENC BLOCK2 = eMAK（TE11 TE12 TE13 TE14 TE15 TE16 TE17 TE18）
-		               = EN21 EN22 EN23 EN24 EN25 EN26 EN27 EN28
-                 */
-        //存放加密后的结果
+
         byte[] enc_block2 = new byte[8];
         enc_block2 = MacEncrypt(temp_block, Key.getBytes());
-        //-------------------------------------------------------------------------------------------------------------------------
 
-                /* 文档中的描述
-                g)  将运算后的结果（ENC BLOCK2）转换成16 个HEXDECIMAL：
-                        ENC BLOCK2 = EN21 EN22 EN23 EN24 EN25 EN26 EN27 EN28
-                        = EM211 EM212 EM221 EM222 EM231 EM232 EM241 EM242 ||
- 			             EM251 EM252 EM261 EM262 EM271 EM272 EM281 EM282
-                h)  取前8个字节作为MAC值。
-                 */
             result_block = "";
-        //因为只取前8个字节作为MAC值，所以计算的长度是加密数组的一半 enc_block2.Length / 2
+
         for (int i = 0; i < enc_block2.length / 2; i++)
         {
-            //将enc_block2[i]中的值由10进制转化为16进制，如果不足2位左补0
+
 
             result_block+=StringUtils.leftPad(Integer.toHexString(enc_block2[i]), Integer.SIZE / 4, '0').substring((Integer.SIZE - Byte.SIZE)  / 4, Integer.SIZE / 4);
         }
         result_block = result_block.toUpperCase();
 
-        //-------------------------------------------------------------------------------------------------------------------------
-        //到这里result_block的值就应该是MAC的值
+
         temp_block =result_block.getBytes();
         String ret = "";
 

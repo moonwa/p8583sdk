@@ -4,7 +4,7 @@ package com.denovo.p8583server.handlers.jsonmodel;
  * Created by Administrator on 2015/1/22.
  */
 
-//退款
+
 public class RefundEntry {
     private String flowCode;
     private String terminalFlowNum;

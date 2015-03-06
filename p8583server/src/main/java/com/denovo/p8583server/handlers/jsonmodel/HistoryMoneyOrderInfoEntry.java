@@ -3,7 +3,7 @@ package com.denovo.p8583server.handlers.jsonmodel;
 /**
  * Created by Administrator on 2015/1/28.
  */
-//退款时 返回交易历史
+
 public class HistoryMoneyOrderInfoEntry {
 
     private String loginNum;

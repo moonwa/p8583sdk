@@ -8,9 +8,9 @@ public class ChargeEntry {
     private String orderFormNum;
     private String terminalFlowNum;
     private String amount;
-    private String payWayCode; //01，现金；02，银联  默认 01
-    private String payWayName;// 现金   默认 现金
-    private String accountType;// 默认 0
+    private String payWayCode;
+    private String payWayName;
+    private String accountType;
     private String loginNum;
     private String channel;
     private String posTerminalCode;

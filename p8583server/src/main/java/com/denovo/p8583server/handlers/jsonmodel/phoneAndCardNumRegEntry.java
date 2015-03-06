@@ -3,7 +3,7 @@ package com.denovo.p8583server.handlers.jsonmodel;
 /**
  * Created by Administrator on 2015/1/28.
  */
-//手机号及卡号注册会员
+
 public class phoneAndCardNumRegEntry {
 
     private String mobileNum;

@@ -3,7 +3,7 @@ package com.denovo.p8583server.handlers.jsonmodel;
 /**
  * Created by Administrator on 2015/1/28.
  */
-//会员扣款
+
 public class ConsumeEntry {
 
         private String orderFormNum;
