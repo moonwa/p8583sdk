@@ -2,21 +2,11 @@ package com.denovo.p8583;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.StringUtils;
-import sun.misc.BASE64Decoder;
-
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.IvParameterSpec;
-
-import java.security.SecureRandom;
-import java.security.Security;
-
-
-import sun.misc.BASE64Encoder;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 
 
